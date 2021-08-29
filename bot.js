@@ -709,7 +709,7 @@ function abbreviate(num, fixed) {
 
 if(process.env.NODE_ENV == 'production'){
     expressApp.get('/', (req, res) => {
-        res.send('Hello World!');
+        res.send(`Hello World!\nPort Number: ${PORT}`);
       });
       expressApp.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);
