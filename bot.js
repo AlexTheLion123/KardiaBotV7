@@ -1,10 +1,9 @@
 require('dotenv').config();
-fs = require('fs');
 const Telegraf = require('telegraf');
 const axios = require(`axios`);
 const fetch = require('node-fetch')
 
-const bot = new Telegraf('1867307172:AAHWyVpnZyxMSDqAJ38y7Jr1bqdi1LIA-o0');
+const bot = new Telegraf(process.env.BOT_TOKEN);
 //real api: process.env.BOT_TOKEN
 //test api: 1867307172:AAHWyVpnZyxMSDqAJ38y7Jr1bqdi1LIA-o0
 //test api: 1962673670:AAHtYB7Y1bW9zkpAuOQCR3qRmGeZthxIJSc
@@ -38,9 +37,19 @@ let lpList = []; // Array of all lp names
 let lpData = []; // Array of objects containing all the LP data (keyboard)
 let coinKeyboard = []; // array of objects for keyboard of coins
 let topTenSymbols = [];
+const HELP_MESSAGE = 
+`
+Here is the breakdown of commands that I support:
+/price symbol - get the price of the specified token. E.g. /price beco
+/list, /info - get a list of the top ten KRC tokens by tvl
+/help - a breakdown of all the bot commands
+/menu - show the main menu
+/now, /summary - show the price summary for the top ten KRC tokens 
 
+To show the chart for a token, just find the token in the menu or send a message with the token name as a single word. Try it, type in 'kai'
+`
 
-bot.start((ctx) => {
+bot.command(["start","menu"],(ctx) => {
     mainMenu(ctx);
 });
 
@@ -113,7 +122,13 @@ fetch(apiurl)
             const input = ctx.message.text.split(" ");
             let input_coin = "";
             if(input.length > 1){
-                input_coin = input[1].toUpperCase();
+                if(input[1]=="bossdoge"){
+                    input_coin = "BossDoge";
+                } else {
+                    input_coin = input[1].toUpperCase();
+                }
+                
+
             } else {
                 ctx.reply("⚠️ Please type a valid coin name after the /price command. Type /list or /start to see the supported coins on Kardiachain\nE.g. /price beco", {reply_to_message_id: ctx.message.message_id})
                 return;
@@ -139,14 +154,17 @@ fetch(apiurl)
             }
         })
         
-        bot.command(["list","help", "info"], ctx => {
+        bot.command(["list", "info"], ctx => {
             let strCoinList = "🏦 The #list of the top 10 coins by tvl is shown below. Use the */price* command to display the information for a specific coin.\nE.g. /price kai\n";
             for(let i=0; i<topTenSymbols.length; i++){
                 strCoinList = strCoinList + `\n${topTenSymbols[i]}`
             }
             ctx.reply(strCoinList, {reply_to_message_id: ctx.message.message_id, parse_mode: 'markdown'})
         })
-        
+
+        bot.command("help", ctx=> {
+            ctx.reply(HELP_MESSAGE, {reply_to_message_id: ctx.message.message_id})
+        })
 
         bot.on('new_chat_members', async ctx => {
             //Welcome message
@@ -161,13 +179,12 @@ The list of commands I support are as follows:
 /list, /help, /info - to display a list of all supported coins
 `
                 ctx.reply(welcome_message, {parse_mode: 'markdown'})
-                .then(res => {
-                        setTimeout(() => {
-                            bot.telegram.deleteMessage(ctx.chat.id, res.message_id)
-                            ctx.deleteMessage()
-                        },DELAY)
-                }) 
-
+                // .then(res => {
+                //         setTimeout(() => {
+                //             bot.telegram.deleteMessage(ctx.chat.id, res.message_id)
+                //             ctx.deleteMessage()
+                //         },DELAY)
+                // }) 
             
             }
         })
@@ -179,23 +196,26 @@ The list of commands I support are as follows:
 
 
 
-bot.command("now", ctx => {
-    if(checkRateLimited(ctx)){
-        return;
-    }
+bot.command(["now","summary"], ctx => {
     ctx.replyWithChatAction("typing");
     showTopTenPrices(ctx);
 })
 
 bot.hears(["Summary", "summary", "now", "all", "prices", "Prices", "Now", "All"], ctx => {
-    if(checkRateLimited(ctx)){
-        return;
-    }
     ctx.replyWithChatAction("typing");
     showTopTenPrices(ctx);
 })
 
+bot.command("IFO", ctx => {
+    showIFO(ctx);
+})
+
 bot.hears("IFO", ctx => {
+    showIFO(ctx);
+})
+
+function showIFO(ctx){
+    ctx.replyWithChatAction("typing");
     ctx.reply("Follow the link to find out more about the IFO with KardiaInfo", 
         {
             reply_to_message_id: ctx.message.message_id,
@@ -207,8 +227,8 @@ bot.hears("IFO", ctx => {
                 ]
             }
             
-        })
-})
+    })
+}
 
 function mainMenu(ctx){
     ctx.reply(`Hello ${ctx.from.first_name}, I am the KardiaInfo bot, click on a button`, 
@@ -229,8 +249,11 @@ function mainMenu(ctx){
         })
 }
 
-
 function showTopTenPrices(ctx){
+    if(checkRateLimited(ctx)){
+        return;
+    }
+
     fetch(apiurl)
         .then((res) => { 
             return res.json();
@@ -266,72 +289,13 @@ function showTopTenPrices(ctx){
             
             let topTenMessage = "<pre>\n";
             for(let i=0; i<spacedSymbols.length; i++){
-                topTenMessage += spacedSymbols[i] + `\t\t` + spacedPrices[i] + `\t\t${priceInKai[i]} KAI\n`
+                topTenMessage += spacedSymbols[i] + `|\t\t$${spacedPrices[i]}\n`;
             }
             topTenMessage += "</pre>"
-            //console.log(topTenMessage);
-            // fs.writeFile('htmlTable.txt', topTenMessage, function (err) {
-            //     if (err) return console.log(err);
-            //     console.log('Hello World > helloworld.txt');
-            //   });
-            //ctx.reply(topTenMessage, {reply_to_message_id: ctx.message.message_id, parse_mode: "HTML"});
-            getTableApi(ctx);
+            ctx.reply(topTenMessage, {reply_to_message_id: ctx.message.message_id, parse_mode: "HTML"});
+            
     })
 }
-
-
-async function getTableApi(ctx){
-     const payload = { html: `<table class="tg">
-      <thead>
-        <tr>
-          <th class="tg-0pky">KAI</th>
-          <th class="tg-0pky">324</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="tg-0pky">USD</td>
-          <td class="tg-0pky">sdklf</td>
-        </tr>
-        <tr>
-          <td class="tg-0pky">Daily % change (usd)</td>
-          <td class="tg-0pky">skfds</td>
-        </tr>
-        <tr>
-          <td class="tg-0pky">TVL</td>
-          <td class="tg-0pky">sklj</td>
-        </tr>
-        <tr>
-          <td class="tg-0pky">MCAP</td>
-          <td class="tg-0pky">lksjfa</td>
-        </tr>
-      </tbody>
-      </table>`,
-      css: `.tg  {border-collapse:collapse;border-spacing:0;}
-      .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-        overflow:hidden;padding:10px 5px;word-break:normal;}
-      .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-        font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-      .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}` };
-
-  let headers = { auth: {
-    username: '45978272-55b6-48a5-b512-54b9b802356e',
-    password: '8f8ae728-5460-4597-abe1-a7ea1f57170c'
-  },
-  headers: {
-    'Content-Type': 'application/json'
-  }
-  }
-  try {
-    const response = await axios.post('https://hcti.io/v1/image', JSON.stringify(payload), headers);
-    ctx.replyWithPhoto(response.data.url);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-
-
 
 function getHTMLTable(arr){
     //get longest symbol
@@ -348,7 +312,6 @@ function getHTMLTable(arr){
         for(let j=0; j<(maxLength-arr[i].length+2); j++){
             tempStr += `\t`;
         }
-        tempStr += `|`
         newArr.push(tempStr);
     }
     //console.log(newArr);
@@ -417,8 +380,6 @@ function onLpCommand(){
     
 } // end of lp function
 
-
-
 function getKeyboardData(coinlist) { //each row of buttons will have 3 columns
     let keyboardData = [];
     let i = 0;
@@ -441,7 +402,6 @@ function getKeyboardData(coinlist) { //each row of buttons will have 3 columns
     return keyboardData;
 }
 
-
 function displayKeyboard(ctx, keyboardData, message){
     ctx.reply(message, 
         {   
@@ -456,7 +416,6 @@ function displayKeyboard(ctx, keyboardData, message){
         })
             
 }
-
 
 function output(name, ctx){
     isLimited = checkRateLimited(ctx);
@@ -552,10 +511,10 @@ function output(name, ctx){
                     })
                 .then(res => {
                     if(!whitelist.includes(sender_id)){
-                        setTimeout(() => {
-                            bot.telegram.deleteMessage(ctx.chat.id, res.message_id)
-                            ctx.deleteMessage()
-                        },DELAY)
+                        // setTimeout(() => {
+                        //     bot.telegram.deleteMessage(ctx.chat.id, res.message_id)
+                        //     ctx.deleteMessage()
+                        // },DELAY)
                     }
                 })                
                 
@@ -564,7 +523,6 @@ function output(name, ctx){
             }
         })
 }            
-
 
 function checkRateLimited(ctx){
     const short_term_limited = short_term_rateLimiter.take(ctx.from.id);
@@ -586,6 +544,9 @@ function checkRateLimited(ctx){
     }
 
     if (short_term_uses == SHORT_TERM_LIMIT) {
+        ctx.deleteMessage()
+        return true;
+        
         if(ctx.chat.type != "supergroup"){
             //ctx.reply(`Please calm down ${ctx.from.first_name}!`)
             ctx.deleteMessage()
@@ -603,6 +564,9 @@ function checkRateLimited(ctx){
     }
 
     if (mid_term_uses == MID_TERM_LIMIT) {
+        ctx.deleteMessage()
+        return true;
+        
         if(ctx.chat.type != "supergroup"){
             //ctx.reply(`Please calm down ${ctx.from.first_name}!`)
             ctx.deleteMessage()
@@ -620,8 +584,10 @@ function checkRateLimited(ctx){
     }
 
     if (long_term_uses == LONG_TERM_LIMIT) {
+        ctx.deleteMessage()
+        return true;
+        
         if(ctx.chat.type != "supergroup"){
-            //ctx.reply(`Please calm down ${ctx.from.first_name}!`)
             ctx.deleteMessage()
             return true
         }
@@ -648,16 +614,6 @@ function numberWithCommas(x) {
     }
     x = arr.join(".")
     return x
-}
-
-function getMinMax(chartdata){
-    minArr = Math.max.apply(Math, chartdata);
-    maxArr = Math.min.apply(Math, chartdata);
-    range = maxArr - minArr;
-    max = maxArr + (0.15*range);
-    min = minArr - (0.15*range);
-
-    return [min,max];
 }
 
 //----------------------------------------------------trying to make chart look better below
@@ -720,17 +676,6 @@ function getchart2(chartdata, coinname){
 //-----------------------------------------------------------------------------------above
 
 
-// function getlink(chartdata, name){
-//     //temp = getMinMax(chartdata);
-//     //min = temp[0];
-//     //max = temp[1];
-
-//     //link = getchart(chartdata, name, min, max);
-//     link = getchart2(chartdata, name);
-
-//     return link;
-// }
-
 function abbreviate(num, fixed) {
     if(typeof(num)=="string"){num = parseFloat(num)};
     if (num === null) { return null; } // terminate early
@@ -745,13 +690,4 @@ function abbreviate(num, fixed) {
 }
 
 
-
-// exports.handler = (event, context, callback) => {
-//     const tmp = JSON.parse(event.body); // get data passed to us
-//     bot.handleUpdate(tmp); // make Telegraf process that data
-//     return callback(null, { // return something for webhook, so it doesn't try to send same stuff again
-//       statusCode: 200,
-//       body: '',
-//     });
-//   };
 bot.launch();
