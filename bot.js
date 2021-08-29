@@ -1,7 +1,9 @@
 require('dotenv').config();
 const Telegraf = require('telegraf');
 const axios = require(`axios`);
-const fetch = require('node-fetch')
+const fetch = require('node-fetch');
+const express = require('express');
+const expressApp = express();
 
 //real api: process.env.BOT_TOKEN
 //test api: 1867307172:AAHWyVpnZyxMSDqAJ38y7Jr1bqdi1LIA-o0
