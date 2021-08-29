@@ -3,12 +3,26 @@ const Telegraf = require('telegraf');
 const axios = require(`axios`);
 const fetch = require('node-fetch')
 
-const bot = new Telegraf(process.env.BOT_TOKEN);
 //real api: process.env.BOT_TOKEN
 //test api: 1867307172:AAHWyVpnZyxMSDqAJ38y7Jr1bqdi1LIA-o0
 //test api: 1962673670:AAHtYB7Y1bW9zkpAuOQCR3qRmGeZthxIJSc
 const apiurl = process.env.TOKEN_API;
 const apiLPurl = process.env.LP_API;
+
+const PORT = process.env.PORT || 3000;
+const URL = 'https://kardia-info-bot.herokuapp.com/';
+
+let bot;
+if (process.env.NODE_ENV === 'production') {
+    bot = new Telegraf(process.env.BOT_TOKEN);
+    bot.telegram.setWebhook(`${URL}/bot${process.env.BOT_TOKEN}`);
+    expressApp.use(bot.webhookCallback(`/bot${process.env.BOT_TOKEN}`));
+    //bot.setWebHook(process.env.HEROKU_URL + bot.token);
+ } else {
+    bot = new Telegraf('1962673670:AAHtYB7Y1bW9zkpAuOQCR3qRmGeZthxIJSc');
+    //bot = new TelegramBot(token, { polling: true });
+ }
+
 
 const QuickChart = require(`quickchart-js`);
 const whitelist = [1783394599, 845055796, 441474956, 1894125099]; // for users to send without being deleted
@@ -690,4 +704,15 @@ function abbreviate(num, fixed) {
 }
 
 
-bot.launch();
+
+if(process.env.NODE_ENV == 'production'){
+    expressApp.get('/', (req, res) => {
+        res.send('Hello World!');
+      });
+      expressApp.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+      });
+} else {
+    bot.launch();
+}
+
