@@ -1,11 +1,11 @@
 require('dotenv').config();
-
+fs = require('fs');
 const Telegraf = require('telegraf');
 const axios = require(`axios`);
 const fetch = require('node-fetch')
 
-const bot = new Telegraf(process.env.BOT_TOKEN);
-//real api: env
+const bot = new Telegraf('1867307172:AAHWyVpnZyxMSDqAJ38y7Jr1bqdi1LIA-o0');
+//real api: process.env.BOT_TOKEN
 //test api: 1867307172:AAHWyVpnZyxMSDqAJ38y7Jr1bqdi1LIA-o0
 //test api: 1962673670:AAHtYB7Y1bW9zkpAuOQCR3qRmGeZthxIJSc
 const apiurl = process.env.TOKEN_API;
@@ -149,11 +149,11 @@ fetch(apiurl)
         
 
         bot.on('new_chat_members', async ctx => {
-                        //Welcome message
+            //Welcome message
             if(groupWhitelist.includes(ctx.chat.id)){
                 welcome_message = 
 `
-🚀 Welcome #${ctx.from.first_name} to KardiaInfo. I am the #KardiaInfo bot and my aim to keep you up to date with the latest information regarding Kardiachain.
+🚀 Welcome #${ctx.from.first_name} to ${ctx.chat.title}. I am the #KardiaInfo bot and my aim to keep you up to date with the latest information regarding Kardiachain.
 
 The list of commands I support are as follows:
 /price coin - e.g. /price beco
@@ -195,7 +195,20 @@ bot.hears(["Summary", "summary", "now", "all", "prices", "Prices", "Now", "All"]
     showTopTenPrices(ctx);
 })
 
-
+bot.hears("IFO", ctx => {
+    ctx.reply("Follow the link to find out more about the IFO with KardiaInfo", 
+        {
+            reply_to_message_id: ctx.message.message_id,
+            reply_markup: {
+                inline_keyboard:[
+                    [
+                        {text: 'IFO Details', url: 'kardiainfo.com/ifo'}
+                    ]
+                ]
+            }
+            
+        })
+})
 
 function mainMenu(ctx){
     ctx.reply(`Hello ${ctx.from.first_name}, I am the KardiaInfo bot, click on a button`, 
@@ -233,10 +246,7 @@ function showTopTenPrices(ctx){
             topTenArray = tokenData.slice(0,10);
             const topTenPrice = topTenArray.map(item => item.price);
             const topTenSymbols = topTenArray.map(item => item.symbol);
-            let priceInkai = 0;
-            
-            
-            let topTenMessage = "";
+            let priceInKai = [];
 
             for(let i=0; i<topTenArray.length; i++){
                 if(topTenSymbols[i].includes("LTD")){
@@ -244,19 +254,106 @@ function showTopTenPrices(ctx){
                 }
                 if(topTenSymbols[i] == `BossDoge` | topTenSymbols[i] == `VNDT` | topTenSymbols[i] == `VNDC`){
                     topTenPrice[i] = parseFloat(topTenPrice[i], 2).toPrecision(3);
-                    priceInkai = parseFloat(topTenPrice[i]/kaipriceTopTen, 2).toPrecision(3);
+                    priceInKai.push(parseFloat(topTenPrice[i]/kaipriceTopTen, 2).toPrecision(3));
                 } else {
                     topTenPrice[i] = numberWithCommas(Math.round(topTenPrice[i] * 10000)/10000);
-                    priceInkai = numberWithCommas(Math.round(topTenPrice[i]/kaipriceTopTen * 10000) / 10000);
+                    priceInKai.push(numberWithCommas(Math.round(topTenPrice[i]/kaipriceTopTen * 10000) / 10000));
                 } 
-
-                topTenMessage = topTenMessage + `${topTenSymbols[i]}  |  $${topTenPrice[i]}  |  ${priceInkai} KAI\n`;
             }
             
-            ctx.reply(topTenMessage, {reply_to_message_id: ctx.message.message_id, parse_mode: "markdown"});
+            const spacedSymbols = getHTMLTable(topTenSymbols);
+            const spacedPrices = getHTMLTable(topTenPrice)
+            
+            let topTenMessage = "<pre>\n";
+            for(let i=0; i<spacedSymbols.length; i++){
+                topTenMessage += spacedSymbols[i] + `\t\t` + spacedPrices[i] + `\t\t${priceInKai[i]} KAI\n`
+            }
+            topTenMessage += "</pre>"
+            //console.log(topTenMessage);
+            // fs.writeFile('htmlTable.txt', topTenMessage, function (err) {
+            //     if (err) return console.log(err);
+            //     console.log('Hello World > helloworld.txt');
+            //   });
+            //ctx.reply(topTenMessage, {reply_to_message_id: ctx.message.message_id, parse_mode: "HTML"});
+            getTableApi(ctx);
     })
 }
 
+
+async function getTableApi(ctx){
+     const payload = { html: `<table class="tg">
+      <thead>
+        <tr>
+          <th class="tg-0pky">KAI</th>
+          <th class="tg-0pky">324</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="tg-0pky">USD</td>
+          <td class="tg-0pky">sdklf</td>
+        </tr>
+        <tr>
+          <td class="tg-0pky">Daily % change (usd)</td>
+          <td class="tg-0pky">skfds</td>
+        </tr>
+        <tr>
+          <td class="tg-0pky">TVL</td>
+          <td class="tg-0pky">sklj</td>
+        </tr>
+        <tr>
+          <td class="tg-0pky">MCAP</td>
+          <td class="tg-0pky">lksjfa</td>
+        </tr>
+      </tbody>
+      </table>`,
+      css: `.tg  {border-collapse:collapse;border-spacing:0;}
+      .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+        overflow:hidden;padding:10px 5px;word-break:normal;}
+      .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+        font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+      .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}` };
+
+  let headers = { auth: {
+    username: '45978272-55b6-48a5-b512-54b9b802356e',
+    password: '8f8ae728-5460-4597-abe1-a7ea1f57170c'
+  },
+  headers: {
+    'Content-Type': 'application/json'
+  }
+  }
+  try {
+    const response = await axios.post('https://hcti.io/v1/image', JSON.stringify(payload), headers);
+    ctx.replyWithPhoto(response.data.url);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
+
+
+function getHTMLTable(arr){
+    //get longest symbol
+    let maxLength = 0;
+    for(let i=0; i<arr.length; i++){
+        if(arr[i].length > maxLength){
+            maxLength = arr[i].length;
+        }
+    }
+
+    let newArr = [];
+    for(let i=0; i<arr.length; i++){
+        let tempStr = arr[i];
+        for(let j=0; j<(maxLength-arr[i].length+2); j++){
+            tempStr += `\t`;
+        }
+        tempStr += `|`
+        newArr.push(tempStr);
+    }
+    //console.log(newArr);
+    return newArr;
+}
 
 function compareTvl(a,b){ //used to sort 
     if(a.tvl < b.tvl){
