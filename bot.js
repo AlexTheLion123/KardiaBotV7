@@ -90,7 +90,7 @@ fetch(apiurl)
         }
         
         bot.hears("Tokens", ctx => {
-            displayKeyboard(ctx, res, `*Click on a coin*`);
+            displayKeyboard(ctx, res, `*Click on a token*`);
         })
 
         bot.hears(coinlist, (ctx) =>{      
