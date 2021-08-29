@@ -233,10 +233,10 @@ function showTopTenPrices(ctx){
             topTenArray = tokenData.slice(0,10);
             const topTenPrice = topTenArray.map(item => item.price);
             const topTenSymbols = topTenArray.map(item => item.symbol);
-            let priceInkai = 0;
+            let priceInkai = [];
             
             
-            let topTenMessage = "";
+            
 
             for(let i=0; i<topTenArray.length; i++){
                 if(topTenSymbols[i].includes("LTD")){
@@ -244,16 +244,16 @@ function showTopTenPrices(ctx){
                 }
                 if(topTenSymbols[i] == `BossDoge` | topTenSymbols[i] == `VNDT` | topTenSymbols[i] == `VNDC`){
                     topTenPrice[i] = parseFloat(topTenPrice[i], 2).toPrecision(3);
-                    priceInkai = parseFloat(topTenPrice[i]/kaipriceTopTen, 2).toPrecision(3);
+                    priceInkai.push(parseFloat(topTenPrice[i]/kaipriceTopTen, 2).toPrecision(3));
                 } else {
                     topTenPrice[i] = numberWithCommas(Math.round(topTenPrice[i] * 10000)/10000);
-                    priceInkai = numberWithCommas(Math.round(topTenPrice[i]/kaipriceTopTen * 10000) / 10000);
+                    priceInkai.push(numberWithCommas(Math.round(topTenPrice[i]/kaipriceTopTen * 10000) / 10000));
                 } 
 
-                topTenMessage = topTenMessage + `${topTenSymbols[i]}  |  $${topTenPrice[i]}  |  ${priceInkai} KAI\n`;
+                
             }
             
-            ctx.reply(topTenMessage, {reply_to_message_id: ctx.message.message_id, parse_mode: "markdown"});
+            //ctx.reply(topTenMessage, {reply_to_message_id: ctx.message.message_id, parse_mode: "markdown"});
     })
 }
 
@@ -620,19 +620,7 @@ function getchart2(chartdata, coinname){
     url = chart.getUrl();
     return(url);
 }
-//-----------------------------------------------------------------------------------above
 
-
-// function getlink(chartdata, name){
-//     //temp = getMinMax(chartdata);
-//     //min = temp[0];
-//     //max = temp[1];
-
-//     //link = getchart(chartdata, name, min, max);
-//     link = getchart2(chartdata, name);
-
-//     return link;
-// }
 
 function abbreviate(num, fixed) {
     if(typeof(num)=="string"){num = parseFloat(num)};
@@ -648,13 +636,4 @@ function abbreviate(num, fixed) {
 }
 
 
-
-// exports.handler = (event, context, callback) => {
-//     const tmp = JSON.parse(event.body); // get data passed to us
-//     bot.handleUpdate(tmp); // make Telegraf process that data
-//     return callback(null, { // return something for webhook, so it doesn't try to send same stuff again
-//       statusCode: 200,
-//       body: '',
-//     });
-//   };
 bot.launch();
