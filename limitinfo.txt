@@ -1,0 +1,3 @@
+SHORT_TERM = 3 messages per 10 seconds
+MID_TERM = 10 messages per 40 seconds
+LONG_TERM = 30 messages per 5 minutes
