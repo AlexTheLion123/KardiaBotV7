@@ -108,16 +108,16 @@ async function mainMenu(ctx){
 
 
 
-bot.on("message", (ctx, next) => {
-    //disable private chat
+// bot.on("message", (ctx, next) => {
+//     //disable private chat
 
-    if(ctx.chat.type == "private"){
-        return ctx.reply("This bot does not support private messaging, please use me in a group environment");
+//     if(ctx.chat.type == "private"){
+//         return ctx.reply("This bot does not support private messaging, please use me in a group environment");
         
-    }
+//     }
 
-    next();
-});
+//     next();
+// });
 
 
 
