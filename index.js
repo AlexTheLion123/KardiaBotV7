@@ -481,6 +481,7 @@ function output(name, ctx){
     console.log("just before axois.get")
     axios.get('https://kardia-info-backend.herokuapp.com/api/')
         .then( async (res) => {
+            console.log("just inside axios");
             try {
                 kaidata = res.data.tokens.filter(item => item.symbol=='KAI');   
                 kaiVals = kaidata[0].histData.slice(1,25);
@@ -540,7 +541,7 @@ function output(name, ctx){
                     //return(message_id);
                 }
                 
-                console.log("laskdfjaklsfjsldkafj")
+                console.log("Just before chart gets sent")
                 await ctx.replyWithPhoto(chartlink, 
                     {   
                         reply_to_message_id: ctx.message.message_id,
