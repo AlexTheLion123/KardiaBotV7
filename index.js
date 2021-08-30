@@ -153,96 +153,97 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         bot.hears("Tokens", ctx => {
             displayKeyboard(ctx, res, `*Click on a coin*`);
         })
+    })
+    module.exports = bot;
 
-        bot.hears(coinlist, (ctx) =>{      
-            output(ctx.message.text, ctx);   
-        })
+//         bot.hears(coinlist, (ctx) =>{      
+//             output(ctx.message.text, ctx);   
+//         })
 
-        bot.hears(coinlistLowerCase, (ctx) => {
-            if(ctx.message.text == "bossdoge"){
-                output("BossDoge", ctx);
-            } else {
-                output(ctx.message.text.toUpperCase(), ctx);
-            }
-        })
+//         bot.hears(coinlistLowerCase, (ctx) => {
+//             if(ctx.message.text == "bossdoge"){
+//                 output("BossDoge", ctx);
+//             } else {
+//                 output(ctx.message.text.toUpperCase(), ctx);
+//             }
+//         })
 
-        bot.hears("Back to Menu", ctx => {
-            mainMenu(ctx);
-        })//
+//         bot.hears("Back to Menu", ctx => {
+//             mainMenu(ctx);
+//         })//
 
-        bot.command("price", ctx => {
-            const input = ctx.message.text.split(" ");
-            let input_coin = "";
-            if(input.length > 1){
-                if(input[1]=="bossdoge"){
-                    input_coin = "BossDoge";
-                } else {
-                    input_coin = input[1].toUpperCase();
-                }
+//         bot.command("price", ctx => {
+//             const input = ctx.message.text.split(" ");
+//             let input_coin = "";
+//             if(input.length > 1){
+//                 if(input[1]=="bossdoge"){
+//                     input_coin = "BossDoge";
+//                 } else {
+//                     input_coin = input[1].toUpperCase();
+//                 }
                 
 
-            } else {
-                ctx.reply("⚠️ Please type a valid coin name after the /price command. Type /list or /start to see the supported coins on Kardiachain\nE.g. /price beco", {reply_to_message_id: ctx.message.message_id})
-                return;
-            }
+//             } else {
+//                 ctx.reply("⚠️ Please type a valid coin name after the /price command. Type /list or /start to see the supported coins on Kardiachain\nE.g. /price beco", {reply_to_message_id: ctx.message.message_id})
+//                 return;
+//             }
             
-            if(input.length > 1 && coinlist.includes(input_coin)){ //types price and coin is valid
-                output(input_coin, ctx);
-            } else if(input.length > 1 && !coinlist.includes(input_coin)){ 
-                const initial_char = input_coin.charAt(0); 
-                const suggestions = coinlist.filter(item => item.charAt(0) == initial_char);
+//             if(input.length > 1 && coinlist.includes(input_coin)){ //types price and coin is valid
+//                 output(input_coin, ctx);
+//             } else if(input.length > 1 && !coinlist.includes(input_coin)){ 
+//                 const initial_char = input_coin.charAt(0); 
+//                 const suggestions = coinlist.filter(item => item.charAt(0) == initial_char);
 
-                //branch 1: types price command and coin but coin is not valid, but first letter matches
-                if(suggestions.length > 0){ 
-                    let temp_str = "⚠️ Did you mean: ";
-                    for(let i=0; i<suggestions.length; i++){
-                        temp_str = temp_str + `\n${suggestions[i]}`;
-                    }
-                    ctx.reply(temp_str, {reply_to_message_id: ctx.message.message_id});
-                //branch 2: types price command and coin but coin is not valid, and first letter does not match.
-                } else {
-                    ctx.reply("⚠️ Please type a valid coin name after the /price command. Type /list or /start to see the supported coins on Kardiachain\nE.g. /price beco", {reply_to_message_id: ctx.message.message_id})
-                }
-            }
-        })
+//                 branch 1: types price command and coin but coin is not valid, but first letter matches
+//                 if(suggestions.length > 0){ 
+//                     let temp_str = "⚠️ Did you mean: ";
+//                     for(let i=0; i<suggestions.length; i++){
+//                         temp_str = temp_str + `\n${suggestions[i]}`;
+//                     }
+//                     ctx.reply(temp_str, {reply_to_message_id: ctx.message.message_id});
+//                 branch 2: types price command and coin but coin is not valid, and first letter does not match.
+//                 } else {
+//                     ctx.reply("⚠️ Please type a valid coin name after the /price command. Type /list or /start to see the supported coins on Kardiachain\nE.g. /price beco", {reply_to_message_id: ctx.message.message_id})
+//                 }
+//             }
+//         })
         
-        bot.command(["list", "info"], ctx => {
-            let strCoinList = "🏦 The #list of the top 10 coins by tvl is shown below. Use the */price* command to display the information for a specific coin.\nE.g. /price kai\n";
-            for(let i=0; i<topTenSymbols.length; i++){
-                strCoinList = strCoinList + `\n${topTenSymbols[i]}`
-            }
-            ctx.reply(strCoinList, {reply_to_message_id: ctx.message.message_id, parse_mode: 'markdown'})
-        })
+//         bot.command(["list", "info"], ctx => {
+//             let strCoinList = "🏦 The #list of the top 10 coins by tvl is shown below. Use the */price* command to display the information for a specific coin.\nE.g. /price kai\n";
+//             for(let i=0; i<topTenSymbols.length; i++){
+//                 strCoinList = strCoinList + `\n${topTenSymbols[i]}`
+//             }
+//             ctx.reply(strCoinList, {reply_to_message_id: ctx.message.message_id, parse_mode: 'markdown'})
+//         })
 
-        bot.command("help", ctx=> {
-            ctx.reply(HELP_MESSAGE, {reply_to_message_id: ctx.message.message_id})
-        })
+//         bot.command("help", ctx=> {
+//             ctx.reply(HELP_MESSAGE, {reply_to_message_id: ctx.message.message_id})
+//         })
 
-        bot.on('new_chat_members', async ctx => {
-            //Welcome message
-            if(groupWhitelist.includes(ctx.chat.id)){
-                welcome_message = 
-`
-🚀 Welcome #${ctx.from.first_name} to ${ctx.chat.title}. I am the #KardiaInfo bot and my aim to keep you up to date with the latest information regarding Kardiachain.
+//         bot.on('new_chat_members', async ctx => {
+//             Welcome message
+//             if(groupWhitelist.includes(ctx.chat.id)){
+//                 welcome_message = 
+// `
+// 🚀 Welcome #${ctx.from.first_name} to ${ctx.chat.title}. I am the #KardiaInfo bot and my aim to keep you up to date with the latest information regarding Kardiachain.
 
-The list of commands I support are as follows:
-/price coin - e.g. /price beco
-/start - to display a button selection of all supported coins
-/list, /help, /info - to display a list of all supported coins
-`
-                ctx.reply(welcome_message, {parse_mode: 'markdown'})
-                // .then(res => {
-                //         setTimeout(() => {
-                //             bot.telegram.deleteMessage(ctx.chat.id, res.message_id)
-                //             ctx.deleteMessage()
-                //         },DELAY)
-                // }) 
+// The list of commands I support are as follows:
+// /price coin - e.g. /price beco
+// /start - to display a button selection of all supported coins
+// /list, /help, /info - to display a list of all supported coins
+// `
+//                 ctx.reply(welcome_message, {parse_mode: 'markdown'})
+//                 .then(res => {
+//                         setTimeout(() => {
+//                             bot.telegram.deleteMessage(ctx.chat.id, res.message_id)
+//                             ctx.deleteMessage()
+//                         },DELAY)
+//                 }) 
             
-            }
-        })
-        
-        module.exports = bot;
-    })
+//             }
+//         })
+
+//     })
 
 
 //     .then(() => {
@@ -441,18 +442,18 @@ function getKeyboardData(coinlist) { //each row of buttons will have 3 columns
     return keyboardData;
 }
 
-// function displayKeyboard(ctx, keyboardData, message){
-//     ctx.reply(message, 
-//         {   
-//             parse_mode: 'markdown',
-//             reply_to_message_id: ctx.message.message_id,
-//             reply_markup: {
-//                 keyboard: keyboardData,
-//                 resize_keyboard: true,
-//                 one_time_keyboard: true,
-//                 selective: true
-//             }
-//         })
+function displayKeyboard(ctx, keyboardData, message){
+    ctx.reply(message, 
+        {   
+            parse_mode: 'markdown',
+            reply_to_message_id: ctx.message.message_id,
+            reply_markup: {
+                keyboard: keyboardData,
+                resize_keyboard: true,
+                one_time_keyboard: true,
+                selective: true
+            }
+        })
             
 // }
 
