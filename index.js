@@ -479,7 +479,7 @@ function output(name, ctx){
         name = "KPHI"
     }
     console.log("just before axois.get")
-    axios.get('https://kardia-info-backend.herokuapp.com/api/')
+    fetch('https://kardia-info-backend.herokuapp.com/api/')
         .then( async (res) => {
             console.log("just inside axios");
             try {
@@ -562,8 +562,7 @@ function output(name, ctx){
                         //     ctx.deleteMessage()
                         // },DELAY)
                     }
-                })
-                .catch(res => console.log("catch in axios"))                
+                })                
                 
             }catch(error){
                 console.log(error)
