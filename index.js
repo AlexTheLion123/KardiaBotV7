@@ -405,7 +405,18 @@ async function onLpCommand(){
                 let lpReplyMessage = 
                 `Price: *$${lpPrice}* \nTVL: *$${lptvl}* \nSupply: *${lpSupply}*`;
                 
-                return ctx.reply(lpReplyMessage, {reply_to_message_id: ctx.message.message_id, parse_mode: "markdown"});
+                return ctx.reply(lpReplyMessage, 
+                    {
+                        reply_to_message_id: ctx.message.message_id, 
+                        parse_mode: "markdown",
+                        reply_markup: {
+                            inline_keyboard:[
+                                [
+                                    {text: 'Get More LP Info', url: 'http://kardiainfo.com/lps'}
+                                ]
+                            ]
+                        }
+                    });
             })
         }) //end of last then
 } // end of lp function
