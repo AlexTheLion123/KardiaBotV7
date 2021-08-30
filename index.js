@@ -478,10 +478,10 @@ async function output(name, ctx){
     if(name=="KEPHI"){
         name = "KPHI"
     }
-
+    console.log("just before fetch")
     await fetch('https://kardia-info-backend.herokuapp.com/api/')
         .then((res) => {
-            console.log("just inside axios");
+            console.log("just inside fetch");
             try {
                 kaidata = res.data.tokens.filter(item => item.symbol=='KAI');   
                 kaiVals = kaidata[0].histData.slice(1,25);
