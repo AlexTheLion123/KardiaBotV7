@@ -123,10 +123,10 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
     })
     .then((res)=> {
         console.log(res);
-        module.exports = bot;
+        
     })
 
-
+    module.exports = bot;
     
 //     .then((jsonData) => {
 //         jsonData.tokens.sort(compareTvl);
