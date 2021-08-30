@@ -480,7 +480,7 @@ async function output(name, ctx){
     }
 
     await fetch('https://kardia-info-backend.herokuapp.com/api/')
-        .then( async (res) => {
+        .then((res) => {
             console.log("just inside axios");
             try {
                 kaidata = res.data.tokens.filter(item => item.symbol=='KAI');   
@@ -547,7 +547,7 @@ async function output(name, ctx){
         })
         .then(res => {
             console.log("Just before chart gets sent")
-            await ctx.replyWithPhoto(res, 
+            ctx.replyWithPhoto(res, 
                 {   
                     reply_to_message_id: ctx.message.message_id,
                     caption: replyMessage,
