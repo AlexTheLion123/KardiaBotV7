@@ -161,6 +161,10 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         bot.hears(coinlist, (ctx) =>{      
             output(ctx.message.text, ctx);   
         })
+
+        bot.hears("alsdkjalskfj", ctx => {
+            ctx.reply("asdfasfdsfkjasfh");
+        })
     })
 
     // bot.hears(coinlistLowerCase, (ctx) => {
