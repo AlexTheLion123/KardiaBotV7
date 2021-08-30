@@ -161,15 +161,15 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         bot.hears(coinlist, async (ctx) =>{   
             return output(ctx.message.text, ctx);   
         })
-    })
 
-    bot.hears(coinlistLowerCase, async (ctx) => {
-        if(ctx.message.text == "bossdoge"){
-            return output("BossDoge", ctx);
-        } else {
-            return output(ctx.message.text.toUpperCase(), ctx);
-        }
-    })    
+        bot.hears(coinlistLowerCase, async (ctx) => {
+            if(ctx.message.text == "bossdoge"){
+                return output("BossDoge", ctx);
+            } else {
+                return output(ctx.message.text.toUpperCase(), ctx);
+            }
+        })    
+    })
 
 
     module.exports = bot;
