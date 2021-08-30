@@ -20,24 +20,26 @@
 
 
 
-
-// require('dotenv').config();
-
-// const axios = require(`axios`);
-// const fetch = require('node-fetch');
-
-// //real api: process.env.BOT_TOKEN
-// //test api: 1867307172:AAHWyVpnZyxMSDqAJ38y7Jr1bqdi1LIA-o0
-// //test api: 1962673670:AAHtYB7Y1bW9zkpAuOQCR3qRmGeZthxIJSc
-// const apiurl = process.env.TOKEN_API;
-// const apiLPurl = process.env.LP_API;
-
-// //const PORT = process.env.PORT || 3000;
-// const HERO_URL = 'https://kardia-info-bot.herokuapp.com/';
-
-
 const { Composer } = require('micro-bot');
 const bot = new Composer;
+
+
+require('dotenv').config();
+
+const axios = require(`axios`);
+const fetch = require('node-fetch');
+
+//real api: process.env.BOT_TOKEN
+//test api: 1867307172:AAHWyVpnZyxMSDqAJ38y7Jr1bqdi1LIA-o0
+//test api: 1962673670:AAHtYB7Y1bW9zkpAuOQCR3qRmGeZthxIJSc
+const apiurl = process.env.TOKEN_API;
+const apiLPurl = process.env.LP_API;
+
+
+const HERO_URL = 'https://kardia-info-bot.herokuapp.com/';
+
+
+
     
 // const QuickChart = require(`quickchart-js`);
 // const whitelist = [1783394599, 845055796, 441474956, 1894125099]; // for users to send without being deleted
