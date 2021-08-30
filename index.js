@@ -1,104 +1,104 @@
-// const { Composer } = require('micro-bot');
-
-// const bot = new Composer;
-
-// bot.start(ctx => {
-//     ctx.reply("Good day")
-// })
-
-// bot.command("hello", ctx => {
-//     ctx.reply("Hello world");
-// })
-
-// bot.command("goodby", ctx => {
-//     ctx.reply("Goodbye");
-// })
-
-// module.exports = bot;
-
-
-
-
-
-
-require('dotenv').config();
-
-const axios = require(`axios`);
-const fetch = require('node-fetch');
-
-//real api: process.env.BOT_TOKEN
-//test api: 1867307172:AAHWyVpnZyxMSDqAJ38y7Jr1bqdi1LIA-o0
-//test api: 1962673670:AAHtYB7Y1bW9zkpAuOQCR3qRmGeZthxIJSc
-const apiurl = process.env.TOKEN_API;
-const apiLPurl = process.env.LP_API;
-
-//const PORT = process.env.PORT || 3000;
-const HERO_URL = 'https://kardia-info-bot.herokuapp.com/';
-
-
 const { Composer } = require('micro-bot');
+
 const bot = new Composer;
+
+bot.start(ctx => {
+    ctx.reply("Good day")
+})
+
+bot.command("hello", ctx => {
+    ctx.reply("Hello world");
+})
+
+bot.command("goodby", ctx => {
+    ctx.reply("Goodbye");
+})
+
+module.exports = bot;
+
+
+
+
+
+
+// require('dotenv').config();
+
+// const axios = require(`axios`);
+// const fetch = require('node-fetch');
+
+// //real api: process.env.BOT_TOKEN
+// //test api: 1867307172:AAHWyVpnZyxMSDqAJ38y7Jr1bqdi1LIA-o0
+// //test api: 1962673670:AAHtYB7Y1bW9zkpAuOQCR3qRmGeZthxIJSc
+// const apiurl = process.env.TOKEN_API;
+// const apiLPurl = process.env.LP_API;
+
+// //const PORT = process.env.PORT || 3000;
+// const HERO_URL = 'https://kardia-info-bot.herokuapp.com/';
+
+
+// const { Composer } = require('micro-bot');
+// const bot = new Composer;
     
-const QuickChart = require(`quickchart-js`);
-const whitelist = [1783394599, 845055796, 441474956, 1894125099]; // for users to send without being deleted
-const groupWhitelist = [-1001543285342, -414304361]; //1 - kardiainfo chat, 2 - bottest test
-let chartlink;
-const DELAY = 300000;
+// const QuickChart = require(`quickchart-js`);
+// const whitelist = [1783394599, 845055796, 441474956, 1894125099]; // for users to send without being deleted
+// const groupWhitelist = [-1001543285342, -414304361]; //1 - kardiainfo chat, 2 - bottest test
+// let chartlink;
+// const DELAY = 300000;
 
 
 
-const _telegrafRateLimiter = require("@riddea/telegraf-rate-limiter");
-SHORT_TERM_LIMIT = 2; // 2 charts per 10 seconds
-SHORT_TERM_MUTE = 10;//seconds
-MID_TERM_LIMIT = 3; // 3 charts per minute
-MID_TERM_MUTE = 60; 
-LONG_TERM_LIMIT = 10; // 10 charts per hour
-LONG_TERM_MUTE = 3600;//seconds
-const short_term_rateLimiter = new _telegrafRateLimiter.RateLimiter(SHORT_TERM_LIMIT, SHORT_TERM_MUTE*1000);
-const mid_term_rateLimiter = new _telegrafRateLimiter.RateLimiter(MID_TERM_LIMIT, MID_TERM_MUTE*1000);
-const long_term_rateLimiter = new _telegrafRateLimiter.RateLimiter(LONG_TERM_LIMIT, LONG_TERM_MUTE*1000);
-//const rateLimiter = new RateLimiter(1,2000) // e.g. each user can only send 1 message per 2 seconds
+// const _telegrafRateLimiter = require("@riddea/telegraf-rate-limiter");
+// SHORT_TERM_LIMIT = 2; // 2 charts per 10 seconds
+// SHORT_TERM_MUTE = 10;//seconds
+// MID_TERM_LIMIT = 3; // 3 charts per minute
+// MID_TERM_MUTE = 60; 
+// LONG_TERM_LIMIT = 10; // 10 charts per hour
+// LONG_TERM_MUTE = 3600;//seconds
+// const short_term_rateLimiter = new _telegrafRateLimiter.RateLimiter(SHORT_TERM_LIMIT, SHORT_TERM_MUTE*1000);
+// const mid_term_rateLimiter = new _telegrafRateLimiter.RateLimiter(MID_TERM_LIMIT, MID_TERM_MUTE*1000);
+// const long_term_rateLimiter = new _telegrafRateLimiter.RateLimiter(LONG_TERM_LIMIT, LONG_TERM_MUTE*1000);
+// //const rateLimiter = new RateLimiter(1,2000) // e.g. each user can only send 1 message per 2 seconds
 
-let topTenArray = [];
-let coinlist = [];
-let lpList = []; // Array of all lp names
-let lpData = []; // Array of objects containing all the LP data (keyboard)
-let coinKeyboard = []; // array of objects for keyboard of coins
-let topTenSymbols = [];
-const HELP_MESSAGE = 
-`
-Here is the breakdown of commands that I support:
-/price symbol - get the price of the specified token. E.g. /price beco
-/list, /info - get a list of the top ten KRC tokens by tvl
-/help - a breakdown of all the bot commands
-/menu - show the main menu
-/now, /summary - show the price summary for the top ten KRC tokens 
+// let topTenArray = [];
+// let coinlist = [];
+// let lpList = []; // Array of all lp names
+// let lpData = []; // Array of objects containing all the LP data (keyboard)
+// let coinKeyboard = []; // array of objects for keyboard of coins
+// let topTenSymbols = [];
+// const HELP_MESSAGE = 
+// `
+// Here is the breakdown of commands that I support:
+// /price symbol - get the price of the specified token. E.g. /price beco
+// /list, /info - get a list of the top ten KRC tokens by tvl
+// /help - a breakdown of all the bot commands
+// /menu - show the main menu
+// /now, /summary - show the price summary for the top ten KRC tokens 
 
-To show the chart for a token, just find the token in the menu or send a message with the token name as a single word. Try it, type in 'kai'
-`
+// To show the chart for a token, just find the token in the menu or send a message with the token name as a single word. Try it, type in 'kai'
+// `
 
-bot.command(["start","menu"],(ctx) => {
-    mainMenu(ctx);
-});
+// bot.command(["start","menu"],(ctx) => {
+//     mainMenu(ctx);
+// });
 
-function mainMenu(ctx){
-    ctx.reply(`Hello ${ctx.from.first_name}, I am the KardiaInfo bot, click on a button`, 
-        {   
-            parse_mode: 'markdown',
-            reply_to_message_id: ctx.message.message_id,
-            reply_markup: {
-                keyboard: [
-                    [{"text": "Tokens"}],
-                    [{"text": "LP"}],
-                    [{"text": "Summary"}],
-                    [{"text": "IFO"}]
-                ],
-                resize_keyboard: true,
-                one_time_keyboard: true,
-                selective: true
-            }
-        })
-}
+// function mainMenu(ctx){
+//     ctx.reply(`Hello ${ctx.from.first_name}, I am the KardiaInfo bot, click on a button`, 
+//         {   
+//             parse_mode: 'markdown',
+//             reply_to_message_id: ctx.message.message_id,
+//             reply_markup: {
+//                 keyboard: [
+//                     [{"text": "Tokens"}],
+//                     [{"text": "LP"}],
+//                     [{"text": "Summary"}],
+//                     [{"text": "IFO"}]
+//                 ],
+//                 resize_keyboard: true,
+//                 one_time_keyboard: true,
+//                 selective: true
+//             }
+//         })
+// }
 //
 
 // bot.on("message", (ctx, next) => {
