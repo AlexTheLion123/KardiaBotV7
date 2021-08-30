@@ -547,7 +547,7 @@ async function output(name, ctx){
             return chartlink;
         })
         .then(async res=>{    
-            return await ctx.replyWithPhoto(res, 
+            return await bot.telegram.sendPhoto(ctx.chat.id,res, 
                 {   
                     reply_to_message_id: ctx.message.message_id,
                     caption: replyMessage,
