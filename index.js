@@ -158,6 +158,8 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
             displayKeyboard(ctx, res, `*Click on a coin*`);
         })
 
+    })
+    .then(res=> {
         bot.hears(coinlist, (ctx) =>{      
             output(ctx.message.text, ctx);   
         })
@@ -169,10 +171,6 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
                 output(ctx.message.text.toUpperCase(), ctx);
             }
         })
-
-        
-        
-
     })
     module.exports = bot;
     
