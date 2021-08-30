@@ -544,10 +544,14 @@ async function output(name, ctx){
             
         
             console.log("Just before chart gets sent")
+            
             return chartlink;
         })
+        .then(res => {
+            ctx.reply("hello")
+        })
         .then(async res=>{    
-            return await bot.Telegram.sendPhoto(ctx.chat.id,res, 
+            return await ctx.replyWithPhoto(res, 
                 {   
                     reply_to_message_id: ctx.message.message_id,
                     caption: replyMessage,
