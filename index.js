@@ -478,8 +478,7 @@ function output(name, ctx){
     if(name=="KEPHI"){
         name = "KPHI"
     }
-    console.log("just before axois.get");
-    try {
+    console.log("just before fetch");
         fetch('https://kardia-info-backend.herokuapp.com/api/')
             .then( async (res) => {
                 console.log("just inside axios");
@@ -561,10 +560,7 @@ function output(name, ctx){
                     console.log(error)
                 }
             })
-    } catch (error) {
-        
-    }
-    
+    console.log("just after fetch")
 }            
 
 function checkRateLimited(ctx){
