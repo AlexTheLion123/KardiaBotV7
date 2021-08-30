@@ -217,11 +217,11 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         onLpCommand();
     })
     .then(() => {
-        bot.command(["now","summary"], ctx => {
+        bot.command(["now","summary"], async ctx => {
             return showTopTenPrices(ctx);
         })
 
-        bot.hears(["Summary", "summary", "now", "all", "prices", "Prices", "Now", "All"], ctx => {
+        bot.hears(["Summary", "summary", "now", "all", "prices", "Prices", "Now", "All"], async ctx => {
             return showTopTenPrices(ctx);
         })
     })
