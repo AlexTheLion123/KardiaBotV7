@@ -208,19 +208,14 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
             }
             return ctx.reply(strCoinList, {reply_to_message_id: ctx.message.message_id, parse_mode: 'markdown'})
         })
+
+        bot.command("help", async ctx=> {
+            return ctx.reply(HELP_MESSAGE, {reply_to_message_id: ctx.message.message_id})
+        })
     })
 
 
     module.exports = bot;
-    
-
-
-        
-
-
-//         bot.command("help", ctx=> {
-//             ctx.reply(HELP_MESSAGE, {reply_to_message_id: ctx.message.message_id})
-//         })
 
 //         bot.on('new_chat_members', async ctx => {
 //             Welcome message
