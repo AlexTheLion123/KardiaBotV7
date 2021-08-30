@@ -168,22 +168,7 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
 
         
         bot.hears("Back to Menu", ctx => {
-            ctx.reply(`Hello ${ctx.from.first_name}, I am the KardiaInfo bot, click on a button`, 
-                {   
-                    parse_mode: 'markdown',
-                    reply_to_message_id: ctx.message.message_id,
-                    reply_markup: {
-                        keyboard: [
-                            [{"text": "Tokens"}],
-                            [{"text": "LP"}],
-                            [{"text": "Summary"}],
-                            [{"text": "IFO"}]
-                        ],
-                        resize_keyboard: true,
-                        one_time_keyboard: true,
-                        selective: true
-                    }
-                })
+            ctx.reply("Hello");
         })
 
     })
