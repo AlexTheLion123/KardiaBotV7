@@ -78,6 +78,15 @@ Here is the breakdown of commands that I support:
 
 To show the chart for a token, just find the token in the menu or send a message with the token name as a single word. Try it, type in 'kai'
 `
+WELCOME_MESSAGE = 
+`
+🚀 Welcome #${ctx.from.first_name} to ${ctx.chat.title}. I am the #KardiaInfo bot and my aim to keep you up to date with the latest information regarding Kardiachain.
+
+The list of commands I support are as follows:
+/price coin - e.g. /price beco
+/start - to display a button selection of all supported coins
+/list, /help, /info - to display a list of all supported coins
+`
 
 bot.command(["start","menu"], async (ctx) => {
     return mainMenu(ctx);
@@ -87,24 +96,15 @@ bot.hears("Back to Menu", async ctx => {
     return mainMenu(ctx);
 })
 
-async function mainMenu(ctx){
-    return await ctx.reply(`Hello ${ctx.from.first_name}, I am the KardiaInfo bot, click on a button`, 
-        {   
-            parse_mode: 'markdown',
-            reply_to_message_id: ctx.message.message_id,
-            reply_markup: {
-                keyboard: [
-                    [{"text": "Tokens"}],
-                    [{"text": "LP"}],
-                    [{"text": "Summary"}],
-                    [{"text": "IFO"}]
-                ],
-                resize_keyboard: true,
-                one_time_keyboard: true,
-                selective: true
-            }
-        })
-}
+bot.command("help", async ctx=> {
+    return ctx.reply(HELP_MESSAGE, {reply_to_message_id: ctx.message.message_id})
+})
+
+bot.on('new_chat_members', async ctx => {
+    if(groupWhitelist.includes(ctx.chat.id)){
+        return ctx.reply(WELCOME_MESSAGE, {parse_mode: 'markdown'})
+    }
+})
 
 // bot.on("message", (ctx, next) => {
 //     //disable private chat
@@ -209,25 +209,7 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
             return ctx.reply(strCoinList, {reply_to_message_id: ctx.message.message_id, parse_mode: 'markdown'})
         })
 
-        bot.command("help", async ctx=> {
-            return ctx.reply(HELP_MESSAGE, {reply_to_message_id: ctx.message.message_id})
-        })
-
-        bot.on('new_chat_members', async ctx => {
-            //Welcome message
-            if(groupWhitelist.includes(ctx.chat.id)){
-                welcome_message = 
-`
-🚀 Welcome #${ctx.from.first_name} to ${ctx.chat.title}. I am the #KardiaInfo bot and my aim to keep you up to date with the latest information regarding Kardiachain.
-
-The list of commands I support are as follows:
-/price coin - e.g. /price beco
-/start - to display a button selection of all supported coins
-/list, /help, /info - to display a list of all supported coins
-`
-                return ctx.reply(welcome_message, {parse_mode: 'markdown'})
-            }
-        })
+        
     })
 
 
@@ -279,7 +261,24 @@ The list of commands I support are as follows:
 //     })
 // }
 
-
+async function mainMenu(ctx){
+    return await ctx.reply(`Hello ${ctx.from.first_name}, I am the KardiaInfo bot, click on a button`, 
+        {   
+            parse_mode: 'markdown',
+            reply_to_message_id: ctx.message.message_id,
+            reply_markup: {
+                keyboard: [
+                    [{"text": "Tokens"}],
+                    [{"text": "LP"}],
+                    [{"text": "Summary"}],
+                    [{"text": "IFO"}]
+                ],
+                resize_keyboard: true,
+                one_time_keyboard: true,
+                selective: true
+            }
+        })
+}
 
 // function showTopTenPrices(ctx){
 //     if(checkRateLimited(ctx)){
