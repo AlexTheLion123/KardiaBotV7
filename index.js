@@ -61,12 +61,12 @@ bot.command("help", async ctx=> {
     return ctx.reply(HELP_MESSAGE, {reply_to_message_id: ctx.message.message_id})
 })
 
-bot.command(["IFO","ifo"], ctx => {
-    showIFO(ctx);
+bot.command(["IFO","ifo"], async ctx => {
+    return showIFO(ctx);
 })
 
-bot.hears(["IFO","ifo"], ctx => {
-    showIFO(ctx);
+bot.hears(["IFO","ifo"], async ctx => {
+    return showIFO(ctx);
 })
 
 bot.on('new_chat_members', async ctx => {
@@ -207,8 +207,8 @@ fetch(apiurl)
 
     module.exports = bot;
 
-function showIFO(ctx){
-    ctx.reply("Follow the link to find out more about the IFO with KardiaInfo", 
+async function showIFO(ctx){
+    return ctx.reply("Follow the link to find out more about the IFO with KardiaInfo", 
         {
             reply_to_message_id: ctx.message.message_id,
             reply_markup: {
