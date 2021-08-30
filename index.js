@@ -106,6 +106,8 @@ function mainMenu(ctx){
 
 bot.on("message", (ctx, next) => {
     //disable private chat
+    console.log(ctx.chat.type);
+
     if(ctx.chat.type == "private"){
         ctx.reply("This bot does not support private messaging, please use me in a group environment");
         return;
