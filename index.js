@@ -61,23 +61,23 @@ const mid_term_rateLimiter = new _telegrafRateLimiter.RateLimiter(MID_TERM_LIMIT
 const long_term_rateLimiter = new _telegrafRateLimiter.RateLimiter(LONG_TERM_LIMIT, LONG_TERM_MUTE*1000);
 //const rateLimiter = new RateLimiter(1,2000) // e.g. each user can only send 1 message per 2 seconds
 
-// let topTenArray = [];
-// let coinlist = [];
-// let lpList = []; // Array of all lp names
-// let lpData = []; // Array of objects containing all the LP data (keyboard)
-// let coinKeyboard = []; // array of objects for keyboard of coins
-// let topTenSymbols = [];
-// const HELP_MESSAGE = 
-// `
-// Here is the breakdown of commands that I support:
-// /price symbol - get the price of the specified token. E.g. /price beco
-// /list, /info - get a list of the top ten KRC tokens by tvl
-// /help - a breakdown of all the bot commands
-// /menu - show the main menu
-// /now, /summary - show the price summary for the top ten KRC tokens 
+let topTenArray = [];
+let coinlist = [];
+let lpList = []; // Array of all lp names
+let lpData = []; // Array of objects containing all the LP data (keyboard)
+let coinKeyboard = []; // array of objects for keyboard of coins
+let topTenSymbols = [];
+const HELP_MESSAGE = 
+`
+Here is the breakdown of commands that I support:
+/price symbol - get the price of the specified token. E.g. /price beco
+/list, /info - get a list of the top ten KRC tokens by tvl
+/help - a breakdown of all the bot commands
+/menu - show the main menu
+/now, /summary - show the price summary for the top ten KRC tokens 
 
-// To show the chart for a token, just find the token in the menu or send a message with the token name as a single word. Try it, type in 'kai'
-// `
+To show the chart for a token, just find the token in the menu or send a message with the token name as a single word. Try it, type in 'kai'
+`
 
 bot.command(["start","menu"],(ctx) => {
     mainMenu(ctx);
