@@ -705,9 +705,7 @@ function abbreviate(num, fixed) {
     return e;
 }
 
-bot.start(ctx => {
-    return ctx.reply("Hello World!")
-});
+
 
 
 if(process.env.NODE_ENV == 'production'){
@@ -717,6 +715,9 @@ if(process.env.NODE_ENV == 'production'){
       });
       expressApp.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);
+        bot.start(ctx => {
+            return ctx.reply("Hello World!")
+        });
       });
 } else {
     bot.launch();
