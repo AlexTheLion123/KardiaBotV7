@@ -93,7 +93,7 @@ bot.on("message", (ctx, next) => {
 });
 
 
-fetch(apiurl)
+fetch('https://kardia-info-backend.herokuapp.com/api/')
     .then((res) => { 
         return res.json();
     })
@@ -282,7 +282,7 @@ function showTopTenPrices(ctx){
         return;
     }
 
-    fetch(apiurl)
+    fetch('https://kardia-info-backend.herokuapp.com/api/')
         .then((res) => { 
             return res.json();
         })
@@ -357,7 +357,7 @@ function compareTvl(a,b){ //used to sort
 }
 
 function onLpCommand(){ 
-    axios.get(apiLPurl)
+    axios.get('http://api.kardiainfo.com/lps')
         .then(res => { // get array of objects
             lpData = res.data.lps;
             return lpData;
