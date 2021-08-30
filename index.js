@@ -355,15 +355,15 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
 //     return newArr;
 // }
 
-// function compareTvl(a,b){ //used to sort 
-//     if(a.tvl < b.tvl){
-//         return -1;
-//     }
-//     if(a.tvl > b.tvl){
-//         return 1;
-//     }
-//     return 0;
-// }
+function compareTvl(a,b){ //used to sort 
+    if(a.tvl < b.tvl){
+        return -1;
+    }
+    if(a.tvl > b.tvl){
+        return 1;
+    }
+    return 0;
+}
 
 // function onLpCommand(){ 
 //     axios.get('http://api.kardiainfo.com/lps')
@@ -417,27 +417,27 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
     
 // } // end of lp function
 
-// function getKeyboardData(coinlist) { //each row of buttons will have 3 columns
-//     let keyboardData = [];
-//     let i = 0;
-//     while(coinlist.length - i > 0) {
+function getKeyboardData(coinlist) { //each row of buttons will have 3 columns
+    let keyboardData = [];
+    let i = 0;
+    while(coinlist.length - i > 0) {
         
-//         if(coinlist.length-i>=3){
-//                 keyboardData.push([{text: coinlist[i]}, {text:coinlist[i+1]}, {text:coinlist[i+2]}])
-//             i = i+3;
-//             continue;
-//         } else if(coinlist.length-i==2) {
-//                 keyboardData.push([{text: coinlist[i]}, {text:coinlist[i+1]}])
-//             i = i+2;
-//             continue;
-//         } else if(coinlist.length-i==1) {
-//             keyboardData.push([{text:coinlist[i]}])
-//             i = i+1;
-//             continue;
-//         }
-//     }
-//     return keyboardData;
-// }
+        if(coinlist.length-i>=3){
+                keyboardData.push([{text: coinlist[i]}, {text:coinlist[i+1]}, {text:coinlist[i+2]}])
+            i = i+3;
+            continue;
+        } else if(coinlist.length-i==2) {
+                keyboardData.push([{text: coinlist[i]}, {text:coinlist[i+1]}])
+            i = i+2;
+            continue;
+        } else if(coinlist.length-i==1) {
+            keyboardData.push([{text:coinlist[i]}])
+            i = i+1;
+            continue;
+        }
+    }
+    return keyboardData;
+}
 
 // function displayKeyboard(ctx, keyboardData, message){
 //     ctx.reply(message, 
