@@ -80,11 +80,11 @@ To show the chart for a token, just find the token in the menu or send a message
 `
 
 bot.command(["start","menu"],(ctx) => {
-    mainMenu(ctx);
+    return mainMenu(ctx);
 });
 
 bot.hears("Back to Menu", ctx => {
-    mainMenu(ctx);
+    return mainMenu(ctx);
 })
 
 async function mainMenu(ctx){
@@ -147,18 +147,18 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         return coinKeyboard;
     })
     .then(res => {
-        // res.push([{"text": "Back to Menu"}])
+        res.push([{"text": "Back to Menu"}])
         
-        // let coinlistLowerCase = [];
-        // for(i=0;i<coinlist.length; i++){ //also allow user to type in lower case
-        //     coinlistLowerCase.push(coinlist[i].toLowerCase());
-        // }
+        let coinlistLowerCase = [];
+        for(i=0;i<coinlist.length; i++){ //also allow user to type in lower case
+            coinlistLowerCase.push(coinlist[i].toLowerCase());
+        }
         
-        // bot.hears("Tokens", ctx => {
-        //     displayKeyboard(ctx, res, `*Click on a coin*`);
-        // })
+        bot.hears("Tokens", ctx => {
+            return displayKeyboard(ctx, res, `*Click on a coin*`);
+        })
         
-        bot.hears("KAI", (ctx) =>{   
+        bot.hears(coinlist, (ctx) =>{   
             console.log("hello");
             output(ctx.message.text, ctx);   
         })
