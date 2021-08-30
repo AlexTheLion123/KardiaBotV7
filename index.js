@@ -482,7 +482,7 @@ async function output(name, ctx){
     await fetch('https://kardia-info-backend.herokuapp.com/api/')
         .then((res) => {
             try {
-                console.log(res);
+                console.log(res.data);
                 kaidata = res.data.tokens.filter(item => item.symbol=='KAI');   
                 kaiVals = kaidata[0].histData.slice(1,25);
                 kaiVals.reverse(); //data is backwards
