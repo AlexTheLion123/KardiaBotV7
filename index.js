@@ -122,6 +122,9 @@ async function mainMenu(ctx){
 
 
 fetch('https://kardia-info-backend.herokuapp.com/api/')
+    .then(res => {
+        return ctx.s
+    })
     .then((res) => { 
         return res.json();
     })
@@ -155,7 +158,7 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         }
         
         bot.hears("Tokens", async ctx => {
-            return displayKeyboard(ctx, res, `*Click on a coin*`);
+            return displayKeyboard(ctx, res, `*Click on a Token*`);
         })
         
         bot.hears(coinlist, async (ctx) =>{   
@@ -480,6 +483,9 @@ async function output(name, ctx){
     }
     
     await fetch('https://kardia-info-backend.herokuapp.com/api/')
+        .then(async res => {
+            return ctx.replyWithChatAction("typing");
+        })
         .then((res) => {
             return res.json()
         })
