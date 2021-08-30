@@ -212,19 +212,16 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
 
         
     })
+    .then(() => {
+        //Listen to show LP keyboard
+        onLpCommand();
+    })
 
 
     module.exports = bot;
 
 
 
-//     })
-
-
-//     .then(() => {
-//         //Listen to show LP keyboard
-//         onLpCommand();
-//     })
 
 
 
@@ -360,57 +357,55 @@ function compareTvl(a,b){ //used to sort
     return 0;
 }
 
-// function onLpCommand(){ 
-//     axios.get('http://api.kardiainfo.com/lps')
-//         .then(res => { // get array of objects
-//             lpData = res.data.lps;
-//             return lpData;
-//         })
-//         .then(res => { // get names of each lp
-//             return res.map(item => item.name)
-//         })
-//         .then(res => { // get length 
-//             for(let i=0; i<res.length; i++){
-//                 lpList[i] = res[i].slice(0, -3);
-//             }
-//             return lpList;
-//         })
-//         .then(res => {
-//             lpKeyboardData = getKeyboardData(res);
-//             lpKeyboardData.push([{"text": "Back to Menu"}])
+async function onLpCommand(){ 
+    await axios.get('http://api.kardiainfo.com/lps')
+        .then(res => { // get array of objects
+            lpData = res.data.lps;
+            return lpData;
+        })
+        .then(res => { // get names of each lp
+            return res.map(item => item.name)
+        })
+        .then(res => { // get length 
+            for(let i=0; i<res.length; i++){
+                lpList[i] = res[i].slice(0, -3);
+            }
+            return lpList;
+        })
+        .then(res => {
+            lpKeyboardData = getKeyboardData(res);
+            lpKeyboardData.push([{"text": "Back to Menu"}])
 
-//             //displayKeyboard(ctx, lpKeyboardData, `*Click on an LP*`)
-//             return lpList
-//         })
-//         .then(res => {
-//             bot.command(["lp", "lps","LP", "LPS", "LPs", "Lp", "Lps"], async ctx => {
-//                 displayKeyboard(ctx, lpKeyboardData, `*Click on an LP*`)
-//             })
+            //displayKeyboard(ctx, lpKeyboardData, `*Click on an LP*`)
+            return lpList
+        })
+        .then(res => {
+            bot.command(["lp", "lps","LP", "LPS", "LPs", "Lp", "Lps"], async ctx => {
+                return displayKeyboard(ctx, lpKeyboardData, `*Click on an LP*`)
+            })
 
-//             bot.hears(["LP", "lp", "lps", "Lp", "Lps"], ctx => {
-//                 displayKeyboard(ctx, lpKeyboardData, `*Click on an LP*`)
-//             })
+            bot.hears(["LP", "lp", "lps", "Lp", "Lps"], async ctx => {
+                return displayKeyboard(ctx, lpKeyboardData, `*Click on an LP*`)
+            })
 
-//             bot.hears(lpList, ctx => {
-//                 if(checkRateLimited(ctx)){
-//                     return;
-//                 }
-//                 let input = ctx.message.text;
+            bot.hears(lpList, async ctx => {
+                if(checkRateLimited(ctx)){
+                    return;
+                }
+                let input = ctx.message.text;
                 
-//                 //find specified LP data
-//                 const lpIndex = lpList.indexOf(input);
-//                 const lpPrice = numberWithCommas(Math.round(lpData[lpIndex].price * 10000)/10000);
-//                 const lptvl = numberWithCommas(Math.round(lpData[lpIndex].tvl));
-//                 const lpSupply = numberWithCommas(Math.round(lpData[lpIndex].supply * 100)/100)
-//                 let lpReplyMessage = 
-//                 `Price: *$${lpPrice}* \nTVL: *$${lptvl}* \nSupply: *${lpSupply}*`;
+                //find specified LP data
+                const lpIndex = lpList.indexOf(input);
+                const lpPrice = numberWithCommas(Math.round(lpData[lpIndex].price * 10000)/10000);
+                const lptvl = numberWithCommas(Math.round(lpData[lpIndex].tvl));
+                const lpSupply = numberWithCommas(Math.round(lpData[lpIndex].supply * 100)/100)
+                let lpReplyMessage = 
+                `Price: *$${lpPrice}* \nTVL: *$${lptvl}* \nSupply: *${lpSupply}*`;
                 
-//                 ctx.reply(lpReplyMessage, {reply_to_message_id: ctx.message.message_id, parse_mode: "markdown"});
-//             });
-            
-//         })
-    
-// } // end of lp function
+                return ctx.reply(lpReplyMessage, {reply_to_message_id: ctx.message.message_id, parse_mode: "markdown"});
+            })
+        }) //end of last then
+} // end of lp function
 
 function getKeyboardData(coinlist) { //each row of buttons will have 3 columns
     let keyboardData = [];
