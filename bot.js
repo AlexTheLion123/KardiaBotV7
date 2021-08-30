@@ -714,9 +714,10 @@ if(process.env.NODE_ENV == 'production'){
     });
     expressApp.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);
-        bot.start(ctx => {
-            ctx.reply("Hello World!")
-        });
+        
+    });
+    bot.start(ctx => {
+        ctx.reply("Hello World!")
     });
 } else {
     bot.launch();
