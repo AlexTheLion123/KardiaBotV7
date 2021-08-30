@@ -142,19 +142,19 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         coinKeyboard = getKeyboardData(coinlist);
         return coinKeyboard;
     })
-    // .then(res => {
-    //     res.push([{"text": "Back to Menu"}])
+    .then(res => {
+        res.push([{"text": "Back to Menu"}])
         
-    //     let coinlistLowerCase = [];
-    //     for(i=0;i<coinlist.length; i++){ //also allow user to type in lower case
-    //         coinlistLowerCase.push(coinlist[i].toLowerCase());
-    //     }
+        let coinlistLowerCase = [];
+        for(i=0;i<coinlist.length; i++){ //also allow user to type in lower case
+            coinlistLowerCase.push(coinlist[i].toLowerCase());
+        }
         
-    //     bot.hears("Tokens", ctx => {
-    //         displayKeyboard(ctx, res, `*Click on a coin*`);
-    //     })
+        bot.hears("Tokens", ctx => {
+            displayKeyboard(ctx, res, `*Click on a coin*`);
+        })
         
-    // })
+    })
     module.exports = bot;
     
 
@@ -457,7 +457,7 @@ function displayKeyboard(ctx, keyboardData, message){
             }
         })
             
-// }
+}
 
 // function output(name, ctx){
 //     isLimited = checkRateLimited(ctx);
@@ -716,11 +716,3 @@ function displayKeyboard(ctx, keyboardData, message){
 //     return(url);
 // }
 // //-----------------------------------------------------------------------------------above
-
-
-
-
-
-
-
-
