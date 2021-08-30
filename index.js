@@ -562,7 +562,8 @@ function output(name, ctx){
                         //     ctx.deleteMessage()
                         // },DELAY)
                     }
-                })                
+                })
+                .catch(res => console.log("catch in axios"))                
                 
             }catch(error){
                 console.log(error)
