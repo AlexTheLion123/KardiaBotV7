@@ -22,8 +22,16 @@ if (process.env.NODE_ENV === 'production') {
     // expressApp.use(bot.webhookCallback(`/bot${process.env.BOT_TOKEN}`));
 
     //method 2 no code at the end
-    bot.telegram.setWebhook(`${HERO_URL}/bot${process.env.BOT_TOKEN}`);
-    bot.startWebhook(`/bot${process.env.BOT_TOKEN}`, null, PORT)
+    // bot.telegram.setWebhook(`${HERO_URL}/bot${process.env.BOT_TOKEN}`);
+    // bot.startWebhook(`/bot${process.env.BOT_TOKEN}`, null, PORT)
+
+    //method 3 long polling
+    expressApp.get('/', (req, res) => {
+        res.send('Hello World!')
+      })
+    expressApp.listen(port, () => {
+        console.log(`Listening on port ${port}`)
+    })
     
  } else {
     bot = new Telegraf('1962673670:AAHtYB7Y1bW9zkpAuOQCR3qRmGeZthxIJSc');
@@ -712,7 +720,7 @@ function abbreviate(num, fixed) {
 
 
 
-
+bot.startPolling();
 // if(process.env.NODE_ENV == 'production'){
 //     expressApp.get('/', (req, res) => {
 //         res.send(`Hello World!\nPort Number: ${PORT}`);
