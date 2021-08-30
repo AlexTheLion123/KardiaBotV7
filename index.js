@@ -1,5 +1,8 @@
 require('dotenv').config();
-const Telegraf = require('telegraf');
+//const Telegraf = require('telegraf');
+
+const {Composer} = require('micro-bot');
+
 const axios = require(`axios`);
 const fetch = require('node-fetch');
 const express = require('express');
@@ -16,11 +19,13 @@ const HERO_URL = 'https://kardia-info-bot.herokuapp.com/';
 
 let bot;
 if (process.env.NODE_ENV === 'production') {
-    bot = new Telegraf(process.env.BOT_TOKEN);
+    const bot = new Composer;
+    
+    //bot = new Telegraf(process.env.BOT_TOKEN);
     
     //method 1 includes code at the end
-    bot.telegram.setWebhook(`${HERO_URL}/bot${process.env.BOT_TOKEN}`);
-    expressApp.use(bot.webhookCallback(`/bot${process.env.BOT_TOKEN}`));
+    //bot.telegram.setWebhook(`${HERO_URL}/bot${process.env.BOT_TOKEN}`);
+    //expressApp.use(bot.webhookCallback(`/bot${process.env.BOT_TOKEN}`));
 
     //method 2 no code at the end
     //bot.telegram.setWebhook(`${HERO_URL}/bot${process.env.BOT_TOKEN}`);
@@ -37,6 +42,7 @@ if (process.env.NODE_ENV === 'production') {
     //https://api.telegram.org/bot<token>/setWebhook?url=<endpoint>
     
  } else {
+    const Telegraf = require('telegraf');
     bot = new Telegraf('1962673670:AAHtYB7Y1bW9zkpAuOQCR3qRmGeZthxIJSc');
     //bot = new TelegramBot(token, { polling: true });
  }
@@ -725,13 +731,15 @@ function abbreviate(num, fixed) {
 
 
 if(process.env.NODE_ENV == 'production'){
-    expressApp.get('/', (req, res) => {
-        res.send(`Hello World!\nPort Number: ${PORT}`);
-    });
-    expressApp.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
+    // expressApp.get('/', (req, res) => {
+    //     res.send(`Hello World!\nPort Number: ${PORT}`);
+    // });
+    // expressApp.listen(PORT, () => {
+    //     console.log(`Server running on port ${PORT}`);
         
-    });
+    // });
+
+    module.exports = bot;
 
 } else {
     bot.launch();
