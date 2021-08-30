@@ -147,18 +147,18 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         return coinKeyboard;
     })
     .then(res => {
-        res.push([{"text": "Back to Menu"}])
+        // res.push([{"text": "Back to Menu"}])
         
-        let coinlistLowerCase = [];
-        for(i=0;i<coinlist.length; i++){ //also allow user to type in lower case
-            coinlistLowerCase.push(coinlist[i].toLowerCase());
-        }
+        // let coinlistLowerCase = [];
+        // for(i=0;i<coinlist.length; i++){ //also allow user to type in lower case
+        //     coinlistLowerCase.push(coinlist[i].toLowerCase());
+        // }
         
-        bot.hears("Tokens", ctx => {
-            displayKeyboard(ctx, res, `*Click on a coin*`);
-        })
+        // bot.hears("Tokens", ctx => {
+        //     displayKeyboard(ctx, res, `*Click on a coin*`);
+        // })
         
-        bot.hears(coinlist, (ctx) =>{   
+        bot.hears("KAI", (ctx) =>{   
             console.log("hello");
             output(ctx.message.text, ctx);   
         })
@@ -546,9 +546,6 @@ async function output(name, ctx){
             console.log("Just before chart gets sent")
             
             return chartlink;
-        })
-        .then(res => {
-            ctx.reply("hello")
         })
         .then(async res=>{    
             return await ctx.replyWithPhoto(res, 
