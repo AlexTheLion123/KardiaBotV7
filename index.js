@@ -547,8 +547,9 @@ async function output(name, ctx){
             
             return chartlink;
         })
-        .then(async res=>{    
-            return await ctx.replyWithPhoto(res, 
+        .then(async res=>{ 
+            ctx.reply("hello")   
+            ctx.replyWithPhoto(res, 
                 {   
                     reply_to_message_id: ctx.message.message_id,
                     caption: replyMessage,
