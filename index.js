@@ -461,7 +461,7 @@ function displayKeyboard(ctx, keyboardData, message){
             
 }
 
-function output(name, ctx){
+async function output(name, ctx){
     isLimited = checkRateLimited(ctx);
     if(isLimited){
         return;
@@ -479,7 +479,7 @@ function output(name, ctx){
         name = "KPHI"
     }
     console.log("just before axois.get")
-    fetch('https://kardia-info-backend.herokuapp.com/api/')
+    await fetch('https://kardia-info-backend.herokuapp.com/api/')
         .then( async (res) => {
             console.log("just inside axios");
             try {
