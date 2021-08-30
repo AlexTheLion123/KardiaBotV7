@@ -143,34 +143,53 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         return coinKeyboard;
     })
     .then(res => {
-        res.push([{"text": "Back to Menu"}])
+        // res.push([{"text": "Back to Menu"}])
         
-        let coinlistLowerCase = [];
-        for(i=0;i<coinlist.length; i++){ //also allow user to type in lower case
-            coinlistLowerCase.push(coinlist[i].toLowerCase());
+        // let coinlistLowerCase = [];
+        // for(i=0;i<coinlist.length; i++){ //also allow user to type in lower case
+        //     coinlistLowerCase.push(coinlist[i].toLowerCase());
+        // }
+        
+        // bot.hears("Tokens", ctx => {
+        //     displayKeyboard(ctx, res, `*Click on a coin*`);
+        // })
+
+        // bot.hears(coinlist, (ctx) =>{      
+        //     output(ctx.message.text, ctx);   
+        // })
+
+        // bot.hears(coinlistLowerCase, (ctx) => {
+        //     if(ctx.message.text == "bossdoge"){
+        //         output("BossDoge", ctx);
+        //     } else {
+        //         output(ctx.message.text.toUpperCase(), ctx);
+        //     }
+        // })
+
+        function mainMenu2(ctx){
+            ctx.reply(`Hello ${ctx.from.first_name}, I am the KardiaInfo bot, click on a button`, 
+                {   
+                    parse_mode: 'markdown',
+                    reply_to_message_id: ctx.message.message_id,
+                    reply_markup: {
+                        keyboard: [
+                            [{"text": "Tokens"}],
+                            [{"text": "LP"}],
+                            [{"text": "Summary"}],
+                            [{"text": "IFO"}]
+                        ],
+                        resize_keyboard: true,
+                        one_time_keyboard: true,
+                        selective: true
+                    }
+                })
         }
-        
-        bot.hears("Tokens", ctx => {
-            displayKeyboard(ctx, res, `*Click on a coin*`);
-        })
-
-        bot.hears(coinlist, (ctx) =>{      
-            output(ctx.message.text, ctx);   
-        })
-
-        bot.hears(coinlistLowerCase, (ctx) => {
-            if(ctx.message.text == "bossdoge"){
-                output("BossDoge", ctx);
-            } else {
-                output(ctx.message.text.toUpperCase(), ctx);
-            }
-        })
 
         bot.hears("Back to Menu", ctx => {
-            console.log("hello")
-            mainMenu(ctx);
+            mainMenu2(ctx);
         })
-    }).catch(res => console.log(res));
+
+    })
     module.exports = bot;
 
 //         bot.command("price", ctx => {
