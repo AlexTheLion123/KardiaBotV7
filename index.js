@@ -92,6 +92,14 @@ bot.command("help", async ctx=> {
     return ctx.reply(HELP_MESSAGE, {reply_to_message_id: ctx.message.message_id})
 })
 
+bot.command("IFO", ctx => {
+    showIFO(ctx);
+})
+
+bot.hears("IFO", ctx => {
+    showIFO(ctx);
+})
+
 bot.on('new_chat_members', async ctx => {
     const WELCOME_MESSAGE = 
 `
@@ -238,29 +246,22 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
 
 
 
-// bot.command("IFO", ctx => {
-//     showIFO(ctx);
-// })
 
-// bot.hears("IFO", ctx => {
-//     showIFO(ctx);
-// })
 
-// function showIFO(ctx){
-//     ctx.replyWithChatAction("typing");
-//     ctx.reply("Follow the link to find out more about the IFO with KardiaInfo", 
-//         {
-//             reply_to_message_id: ctx.message.message_id,
-//             reply_markup: {
-//                 inline_keyboard:[
-//                     [
-//                         {text: 'IFO Details', url: 'kardiainfo.com/ifo'}
-//                     ]
-//                 ]
-//             }
+function showIFO(ctx){
+    ctx.reply("Follow the link to find out more about the IFO with KardiaInfo", 
+        {
+            reply_to_message_id: ctx.message.message_id,
+            reply_markup: {
+                inline_keyboard:[
+                    [
+                        {text: 'IFO Details', url: 'kardiainfo.com/ifo'}
+                    ]
+                ]
+            }
             
-//     })
-// }
+    })
+}
 
 async function mainMenu(ctx){
     return await ctx.reply(`Hello ${ctx.from.first_name}, I am the KardiaInfo bot, click on a button`, 
