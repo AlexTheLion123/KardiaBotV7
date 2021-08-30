@@ -41,11 +41,11 @@ const HERO_URL = 'https://kardia-info-bot.herokuapp.com/';
 
 
     
-// const QuickChart = require(`quickchart-js`);
-// const whitelist = [1783394599, 845055796, 441474956, 1894125099]; // for users to send without being deleted
-// const groupWhitelist = [-1001543285342, -414304361]; //1 - kardiainfo chat, 2 - bottest test
-// let chartlink;
-// const DELAY = 300000;
+const QuickChart = require(`quickchart-js`);
+const whitelist = [1783394599, 845055796, 441474956, 1894125099]; // for users to send without being deleted
+const groupWhitelist = [-1001543285342, -414304361]; //1 - kardiainfo chat, 2 - bottest test
+let chartlink;
+const DELAY = 300000;
 
 
 
