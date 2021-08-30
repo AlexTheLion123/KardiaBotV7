@@ -159,18 +159,17 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         })
         
         bot.hears(coinlist, async (ctx) =>{   
-            console.log("hello");
             return output(ctx.message.text, ctx);   
         })
     })
 
-    // bot.hears(coinlistLowerCase, (ctx) => {
-    //     if(ctx.message.text == "bossdoge"){
-    //         output("BossDoge", ctx);
-    //     } else {
-    //         output(ctx.message.text.toUpperCase(), ctx);
-    //     }
-    // })    
+    bot.hears(coinlistLowerCase, async (ctx) => {
+        if(ctx.message.text == "bossdoge"){
+            return output("BossDoge", ctx);
+        } else {
+            return output(ctx.message.text.toUpperCase(), ctx);
+        }
+    })    
 
 
     module.exports = bot;
@@ -469,8 +468,6 @@ async function output(name, ctx){
     
     
     let sender_id = ctx.from.id
-    //console.log("just before reply with chat action")
-    //ctx.replyWithChatAction("upload_photo");
     
     if(name=="LTD"){
         name = "LTD Token"
@@ -542,8 +539,6 @@ async function output(name, ctx){
                 //return(message_id);
             }
         
-            console.log("Just before chart gets sent")
-            
             return chartlink;
         })
         .then(async res=>{    
@@ -561,7 +556,6 @@ async function output(name, ctx){
                     }
                 })
         })//end of fetch .then
-    console.log("just after fetch")
 }            
 
 function checkRateLimited(ctx){
