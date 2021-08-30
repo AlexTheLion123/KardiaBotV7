@@ -212,33 +212,28 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         bot.command("help", async ctx=> {
             return ctx.reply(HELP_MESSAGE, {reply_to_message_id: ctx.message.message_id})
         })
+
+        bot.on('new_chat_members', async ctx => {
+            //Welcome message
+            if(groupWhitelist.includes(ctx.chat.id)){
+                welcome_message = 
+`
+🚀 Welcome #${ctx.from.first_name} to ${ctx.chat.title}. I am the #KardiaInfo bot and my aim to keep you up to date with the latest information regarding Kardiachain.
+
+The list of commands I support are as follows:
+/price coin - e.g. /price beco
+/start - to display a button selection of all supported coins
+/list, /help, /info - to display a list of all supported coins
+`
+                return ctx.reply(welcome_message, {parse_mode: 'markdown'})
+            }
+        })
     })
 
 
     module.exports = bot;
 
-//         bot.on('new_chat_members', async ctx => {
-//             Welcome message
-//             if(groupWhitelist.includes(ctx.chat.id)){
-//                 welcome_message = 
-// `
-// 🚀 Welcome #${ctx.from.first_name} to ${ctx.chat.title}. I am the #KardiaInfo bot and my aim to keep you up to date with the latest information regarding Kardiachain.
 
-// The list of commands I support are as follows:
-// /price coin - e.g. /price beco
-// /start - to display a button selection of all supported coins
-// /list, /help, /info - to display a list of all supported coins
-// `
-//                 ctx.reply(welcome_message, {parse_mode: 'markdown'})
-//                 .then(res => {
-//                         setTimeout(() => {
-//                             bot.telegram.deleteMessage(ctx.chat.id, res.message_id)
-//                             ctx.deleteMessage()
-//                         },DELAY)
-//                 }) 
-            
-//             }
-//         })
 
 //     })
 
