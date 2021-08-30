@@ -544,7 +544,7 @@ async function output(name, ctx){
             
         
             console.log("Just before chart gets sent")
-            ctx.replyWithPhoto(res, 
+            return ctx.replyWithPhoto(res, 
                 {   
                     reply_to_message_id: ctx.message.message_id,
                     caption: replyMessage,
