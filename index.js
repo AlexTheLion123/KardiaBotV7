@@ -169,8 +169,8 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         bot.hears("Back to Menu", ctx => {
             console.log("hello")
             mainMenu(ctx);
-        }).catch(res => console.log(res))
-    })
+        })
+    }).catch(res => console.log(res));
     module.exports = bot;
 
 //         bot.command("price", ctx => {
