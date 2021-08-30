@@ -168,11 +168,11 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
 
         
         bot.hears("BacktoMenu", ctx => {
-            console.log("hello");
+            ctx.reply("hello");
         })
 
+        module.exports = bot;
     })
-    module.exports = bot;
 
 //         bot.command("price", ctx => {
 //             const input = ctx.message.text.split(" ");
