@@ -643,15 +643,15 @@ function checkRateLimited(ctx){
 }
 
 
-// function numberWithCommas(x) {
-//     x = x.toString();
-//     arr = x.split(".");
-//     if(arr[0].length > 3){
-//         arr[0] = arr[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-//     }
-//     x = arr.join(".")
-//     return x
-// }
+function numberWithCommas(x) {
+    x = x.toString();
+    arr = x.split(".");
+    if(arr[0].length > 3){
+        arr[0] = arr[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+    x = arr.join(".")
+    return x
+}
 
 // //----------------------------------------------------trying to make chart look better below
 // function getchart2(chartdata, coinname){
