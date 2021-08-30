@@ -159,7 +159,7 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         })
         
         bot.hears(coinlist, (ctx) =>{   
-            console.log("hello")   ;
+            console.log("hello");
             output(ctx.message.text, ctx);   
         })
     })
@@ -469,6 +469,7 @@ function output(name, ctx){
     
     
     let sender_id = ctx.from.id
+    console.log("just before reply with chat action")
     ctx.replyWithChatAction("upload_photo");
     
     if(name=="LTD"){
@@ -477,7 +478,7 @@ function output(name, ctx){
     if(name=="KEPHI"){
         name = "KPHI"
     }
-
+    console.log("just before axois.get")
     axios.get('https://kardia-info-backend.herokuapp.com/api/')
         .then( async (res) => {
             try {
