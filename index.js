@@ -654,60 +654,59 @@ function numberWithCommas(x) {
 }
 
 // //----------------------------------------------------trying to make chart look better below
-// function getchart2(chartdata, coinname){
-    
+function getchart2(chartdata, coinname){
 
-//     const chart = new QuickChart();
+    const chart = new QuickChart();
 
-//     chart.setWidth(500)
-//     chart.setHeight(300);
-//     chart.setBackgroundColor("black");
+    chart.setWidth(500)
+    chart.setHeight(300);
+    chart.setBackgroundColor("black");
 
-//     chart.setConfig({
-//         type: 'line',
-//         data: {
-//             labels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24],
-//             datasets: [{
-//                 data: chartdata,
-//                 fill: false,
-//                 borderColor: QuickChart.getGradientFillHelper('vertical', ['#eb3639', '#a336eb', '#36a2eb']),
-//                 borderWidth: 5,
-//                 pointRadius: 0,
-//             }]
-//         },
-//         options: {
-//             legend: {
-//                 display: false
-//             },
-//             scales: {
-//                 xAxes: [{
-//                     display: false,
-//                         gridLines: {
-//                             display: "false",
-//                             //color: "grey"
-//                         },
-//                 }],
-//                 yAxes: [{
-//                     display: true,
-//                         gridLines: {
-//                             display: "false",
-//                             //color: "grey"
-//                         },
-//                 }]
-//             },
-//             // plugins: {
-//             //     backgroundImageUrl: 'https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569__340.jpg',
-//             // }
-//             title: {
-//               display: true,
-//               text: '24H Price Chart in KAI',
-//             }
-//         },
+    chart.setConfig({
+        type: 'line',
+        data: {
+            labels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24],
+            datasets: [{
+                data: chartdata,
+                fill: false,
+                borderColor: QuickChart.getGradientFillHelper('vertical', ['#eb3639', '#a336eb', '#36a2eb']),
+                borderWidth: 5,
+                pointRadius: 0,
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            },
+            scales: {
+                xAxes: [{
+                    display: false,
+                        gridLines: {
+                            display: "false",
+                            //color: "grey"
+                        },
+                }],
+                yAxes: [{
+                    display: true,
+                        gridLines: {
+                            display: "false",
+                            //color: "grey"
+                        },
+                }]
+            },
+            // plugins: {
+            //     backgroundImageUrl: 'https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569__340.jpg',
+            // }
+            title: {
+              display: true,
+              text: '24H Price Chart in KAI',
+            }
+        },
         
-//     });
+    });
 
-//     // Print the chart URL
-//     url = chart.getUrl();
-//     return(url);
-// }
+    // Print the chart URL
+    url = chart.getUrl();
+    return(url);
+}
 // //-----------------------------------------------------------------------------------above
