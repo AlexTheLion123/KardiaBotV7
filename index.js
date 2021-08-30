@@ -282,12 +282,12 @@ async function mainMenu(ctx){
         })
 }
 
-function showTopTenPrices(ctx){
+async function showTopTenPrices(ctx){
     if(checkRateLimited(ctx)){
         return;
     }
 
-    fetch('https://kardia-info-backend.herokuapp.com/api/')
+    await fetch('https://kardia-info-backend.herokuapp.com/api/')
         .then((res) => { 
             return res.json();
         })
@@ -325,31 +325,31 @@ function showTopTenPrices(ctx){
                 topTenMessage += spacedSymbols[i] + `|\t\t$${spacedPrices[i]}\n`;
             }
             topTenMessage += "</pre>"
-            ctx.reply(topTenMessage, {reply_to_message_id: ctx.message.message_id, parse_mode: "HTML"});
+            return ctx.reply(topTenMessage, {reply_to_message_id: ctx.message.message_id, parse_mode: "HTML"});
             
     })
 }
 
-// function getHTMLTable(arr){
-//     //get longest symbol
-//     let maxLength = 0;
-//     for(let i=0; i<arr.length; i++){
-//         if(arr[i].length > maxLength){
-//             maxLength = arr[i].length;
-//         }
-//     }
+function getHTMLTable(arr){
+    //get longest symbol
+    let maxLength = 0;
+    for(let i=0; i<arr.length; i++){
+        if(arr[i].length > maxLength){
+            maxLength = arr[i].length;
+        }
+    }
 
-//     let newArr = [];
-//     for(let i=0; i<arr.length; i++){
-//         let tempStr = arr[i];
-//         for(let j=0; j<(maxLength-arr[i].length+2); j++){
-//             tempStr += `\t`;
-//         }
-//         newArr.push(tempStr);
-//     }
-//     //console.log(newArr);
-//     return newArr;
-// }
+    let newArr = [];
+    for(let i=0; i<arr.length; i++){
+        let tempStr = arr[i];
+        for(let j=0; j<(maxLength-arr[i].length+2); j++){
+            tempStr += `\t`;
+        }
+        newArr.push(tempStr);
+    }
+    //console.log(newArr);
+    return newArr;
+}
 
 function compareTvl(a,b){ //used to sort 
     if(a.tvl < b.tvl){
