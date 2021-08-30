@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === 'production') {
     // bot.telegram.setWebhook(`${HERO_URL}/bot${process.env.BOT_TOKEN}`);
     // bot.startWebhook(`/bot${process.env.BOT_TOKEN}`, null, PORT)
 
-    //method 3 long polling
+    //method 3 long polling, bot.startPolling() at the end
     expressApp.get('/', (req, res) => {
         res.send('Hello World!')
       })
@@ -720,7 +720,7 @@ function abbreviate(num, fixed) {
 
 
 
-bot.startPolling();
+bot.launch();
 // if(process.env.NODE_ENV == 'production'){
 //     expressApp.get('/', (req, res) => {
 //         res.send(`Hello World!\nPort Number: ${PORT}`);
