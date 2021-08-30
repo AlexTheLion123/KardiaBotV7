@@ -240,8 +240,10 @@ The list of commands I support are as follows:
             
             }
         })
+        
+        module.exports = bot;
     })
-module.exports = bot;
+
 
 //     .then(() => {
 //         //Listen to show LP keyboard
