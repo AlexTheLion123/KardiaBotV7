@@ -480,9 +480,6 @@ async function output(name, ctx){
     }
     
     await fetch('https://kardia-info-backend.herokuapp.com/api/')
-        .then(async res => {
-            return ctx.replyWithChatAction("typing");
-        })
         .then((res) => {
             return res.json()
         })
