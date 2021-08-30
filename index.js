@@ -155,7 +155,8 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         })
         module.exports = bot;
         return 2;
-    })//
+    })
+    .catch(res => console.log(res))
     
 
 //         bot.hears(coinlist, (ctx) =>{      
