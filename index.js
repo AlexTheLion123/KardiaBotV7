@@ -88,7 +88,7 @@ bot.hears("Back to Menu", ctx => {
 })
 
 function mainMenu(ctx){
-    ctx.reply(`Hello ${ctx.from.first_name}, I am the KardiaInfo bot, click on a button`, 
+    return ctx.reply(`Hello ${ctx.from.first_name}, I am the KardiaInfo bot, click on a button`, 
         {   
             parse_mode: 'markdown',
             reply_to_message_id: ctx.message.message_id,
@@ -446,8 +446,8 @@ function getKeyboardData(coinlist) { //each row of buttons will have 3 columns
     return keyboardData;
 }
 
-async function displayKeyboard(ctx, keyboardData, message){
-    await ctx.reply(message, 
+function displayKeyboard(ctx, keyboardData, message){
+    return ctx.reply(message, 
         {   
             parse_mode: 'markdown',
             reply_to_message_id: ctx.message.message_id,
