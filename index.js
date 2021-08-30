@@ -320,7 +320,7 @@ async function showTopTenPrices(ctx){
                     reply_markup: {
                         inline_keyboard:[
                             [
-                                {text: 'Get More Token Info', url: 'http://kardiainfo.com/tokens'}
+                                {text: 'Get more Token Info', url: 'http://kardiainfo.com/tokens'}
                             ]
                         ]
                     }
@@ -412,7 +412,7 @@ async function onLpCommand(){
                         reply_markup: {
                             inline_keyboard:[
                                 [
-                                    {text: 'Get More LP Info', url: 'http://kardiainfo.com/lps'}
+                                    {text: 'Get more LP Info', url: 'http://kardiainfo.com/lps'}
                                 ]
                             ]
                         }
