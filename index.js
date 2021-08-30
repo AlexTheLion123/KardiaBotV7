@@ -200,6 +200,14 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
                 }
             }
         })
+
+        bot.command(["list", "info"], async ctx => {
+            let strCoinList = "🏦 The #list of the top 10 coins by tvl is shown below. Use the */price* command to display the information for a specific coin.\nE.g. /price kai\n";
+            for(let i=0; i<topTenSymbols.length; i++){
+                strCoinList = strCoinList + `\n${topTenSymbols[i]}`
+            }
+            return ctx.reply(strCoinList, {reply_to_message_id: ctx.message.message_id, parse_mode: 'markdown'})
+        })
     })
 
 
@@ -208,13 +216,7 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
 
 
         
-//         bot.command(["list", "info"], ctx => {
-//             let strCoinList = "🏦 The #list of the top 10 coins by tvl is shown below. Use the */price* command to display the information for a specific coin.\nE.g. /price kai\n";
-//             for(let i=0; i<topTenSymbols.length; i++){
-//                 strCoinList = strCoinList + `\n${topTenSymbols[i]}`
-//             }
-//             ctx.reply(strCoinList, {reply_to_message_id: ctx.message.message_id, parse_mode: 'markdown'})
-//         })
+
 
 //         bot.command("help", ctx=> {
 //             ctx.reply(HELP_MESSAGE, {reply_to_message_id: ctx.message.message_id})
