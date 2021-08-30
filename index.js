@@ -480,6 +480,7 @@ async function output(name, ctx){
     }
     console.log("just before fetch");
     await fetch('https://kardia-info-backend.herokuapp.com/api/')
+        .then(()=> console.log("hello"))
         .then( async (res) => {
             console.log("just inside axios");
             try {
