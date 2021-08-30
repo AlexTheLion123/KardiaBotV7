@@ -216,6 +216,15 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         //Listen to show LP keyboard
         onLpCommand();
     })
+    .then(() => {
+        bot.command(["now","summary"], ctx => {
+            return showTopTenPrices(ctx);
+        })
+
+        bot.hears(["Summary", "summary", "now", "all", "prices", "Prices", "Now", "All"], ctx => {
+            return showTopTenPrices(ctx);
+        })
+    })
 
 
     module.exports = bot;
@@ -225,15 +234,9 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
 
 
 
-// bot.command(["now","summary"], ctx => {
-//     ctx.replyWithChatAction("typing");
-//     showTopTenPrices(ctx);
-// })
 
-// bot.hears(["Summary", "summary", "now", "all", "prices", "Prices", "Now", "All"], ctx => {
-//     ctx.replyWithChatAction("typing");
-//     showTopTenPrices(ctx);
-// })
+
+
 
 // bot.command("IFO", ctx => {
 //     showIFO(ctx);
@@ -278,53 +281,53 @@ async function mainMenu(ctx){
         })
 }
 
-// function showTopTenPrices(ctx){
-//     if(checkRateLimited(ctx)){
-//         return;
-//     }
+function showTopTenPrices(ctx){
+    if(checkRateLimited(ctx)){
+        return;
+    }
 
-//     fetch('https://kardia-info-backend.herokuapp.com/api/')
-//         .then((res) => { 
-//             return res.json();
-//         })
-//         .then((jsonData) => {
-//             tokenData = jsonData.tokens;
+    fetch('https://kardia-info-backend.herokuapp.com/api/')
+        .then((res) => { 
+            return res.json();
+        })
+        .then((jsonData) => {
+            tokenData = jsonData.tokens;
 
-//             const kaidataTopTen = tokenData.filter(item => item.symbol=='KAI');   
-//             const kaipriceTopTen = kaidataTopTen[0].price;
+            const kaidataTopTen = tokenData.filter(item => item.symbol=='KAI');   
+            const kaipriceTopTen = kaidataTopTen[0].price;
 
-//             tokenData.sort(compareTvl);
-//             tokenData.reverse();
-//             topTenArray = tokenData.slice(0,10);
-//             const topTenPrice = topTenArray.map(item => item.price);
-//             const topTenSymbols = topTenArray.map(item => item.symbol);
-//             let priceInKai = [];
+            tokenData.sort(compareTvl);
+            tokenData.reverse();
+            topTenArray = tokenData.slice(0,10);
+            const topTenPrice = topTenArray.map(item => item.price);
+            const topTenSymbols = topTenArray.map(item => item.symbol);
+            let priceInKai = [];
 
-//             for(let i=0; i<topTenArray.length; i++){
-//                 if(topTenSymbols[i].includes("LTD")){
-//                     topTenSymbols[i] = "LTD";
-//                 }
-//                 if(topTenSymbols[i] == `BossDoge` | topTenSymbols[i] == `VNDT` | topTenSymbols[i] == `VNDC`){
-//                     topTenPrice[i] = parseFloat(topTenPrice[i], 2).toPrecision(3);
-//                     priceInKai.push(parseFloat(topTenPrice[i]/kaipriceTopTen, 2).toPrecision(3));
-//                 } else {
-//                     topTenPrice[i] = numberWithCommas(Math.round(topTenPrice[i] * 10000)/10000);
-//                     priceInKai.push(numberWithCommas(Math.round(topTenPrice[i]/kaipriceTopTen * 10000) / 10000));
-//                 } 
-//             }
+            for(let i=0; i<topTenArray.length; i++){
+                if(topTenSymbols[i].includes("LTD")){
+                    topTenSymbols[i] = "LTD";
+                }
+                if(topTenSymbols[i] == `BossDoge` | topTenSymbols[i] == `VNDT` | topTenSymbols[i] == `VNDC`){
+                    topTenPrice[i] = parseFloat(topTenPrice[i], 2).toPrecision(3);
+                    priceInKai.push(parseFloat(topTenPrice[i]/kaipriceTopTen, 2).toPrecision(3));
+                } else {
+                    topTenPrice[i] = numberWithCommas(Math.round(topTenPrice[i] * 10000)/10000);
+                    priceInKai.push(numberWithCommas(Math.round(topTenPrice[i]/kaipriceTopTen * 10000) / 10000));
+                } 
+            }
             
-//             const spacedSymbols = getHTMLTable(topTenSymbols);
-//             const spacedPrices = getHTMLTable(topTenPrice)
+            const spacedSymbols = getHTMLTable(topTenSymbols);
+            const spacedPrices = getHTMLTable(topTenPrice)
             
-//             let topTenMessage = "<pre>\n";
-//             for(let i=0; i<spacedSymbols.length; i++){
-//                 topTenMessage += spacedSymbols[i] + `|\t\t$${spacedPrices[i]}\n`;
-//             }
-//             topTenMessage += "</pre>"
-//             ctx.reply(topTenMessage, {reply_to_message_id: ctx.message.message_id, parse_mode: "HTML"});
+            let topTenMessage = "<pre>\n";
+            for(let i=0; i<spacedSymbols.length; i++){
+                topTenMessage += spacedSymbols[i] + `|\t\t$${spacedPrices[i]}\n`;
+            }
+            topTenMessage += "</pre>"
+            ctx.reply(topTenMessage, {reply_to_message_id: ctx.message.message_id, parse_mode: "HTML"});
             
-//     })
-// }
+    })
+}
 
 // function getHTMLTable(arr){
 //     //get longest symbol
