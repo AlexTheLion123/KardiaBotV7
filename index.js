@@ -166,7 +166,8 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         //     }
         // })
 
-        function mainMenu2(ctx){
+        
+        bot.hears("Back to Menu", ctx => {
             ctx.reply(`Hello ${ctx.from.first_name}, I am the KardiaInfo bot, click on a button`, 
                 {   
                     parse_mode: 'markdown',
@@ -183,10 +184,6 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
                         selective: true
                     }
                 })
-        }
-
-        bot.hears("Back to Menu", ctx => {
-            mainMenu2(ctx);
         })
 
     })
