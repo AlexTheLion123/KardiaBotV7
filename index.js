@@ -446,8 +446,8 @@ function getKeyboardData(coinlist) { //each row of buttons will have 3 columns
     return keyboardData;
 }
 
-function displayKeyboard(ctx, keyboardData, message){
-    ctx.reply(message, 
+async function displayKeyboard(ctx, keyboardData, message){
+    await ctx.reply(message, 
         {   
             parse_mode: 'markdown',
             reply_to_message_id: ctx.message.message_id,
@@ -469,7 +469,7 @@ async function output(name, ctx){
     
     
     let sender_id = ctx.from.id
-    console.log("just before reply with chat action")
+    //console.log("just before reply with chat action")
     //ctx.replyWithChatAction("upload_photo");
     
     if(name=="LTD"){
