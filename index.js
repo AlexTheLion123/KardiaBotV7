@@ -569,86 +569,86 @@ function output(name, ctx){
         })
 }            
 
-// function checkRateLimited(ctx){
-//     const short_term_limited = short_term_rateLimiter.take(ctx.from.id);
-//     const short_term_uses = short_term_rateLimiter.limiters[ctx.from.id].tokensThisInterval
+function checkRateLimited(ctx){
+    const short_term_limited = short_term_rateLimiter.take(ctx.from.id);
+    const short_term_uses = short_term_rateLimiter.limiters[ctx.from.id].tokensThisInterval
 
-//     const mid_term_limited = mid_term_rateLimiter.take(ctx.from.id);
-//     const mid_term_uses = mid_term_rateLimiter.limiters[ctx.from.id].tokensThisInterval
+    const mid_term_limited = mid_term_rateLimiter.take(ctx.from.id);
+    const mid_term_uses = mid_term_rateLimiter.limiters[ctx.from.id].tokensThisInterval
 
-//     const long_term_limited = long_term_rateLimiter.take(ctx.from.id);
-//     const long_term_uses = long_term_rateLimiter.limiters[ctx.from.id].tokensThisInterval
+    const long_term_limited = long_term_rateLimiter.take(ctx.from.id);
+    const long_term_uses = long_term_rateLimiter.limiters[ctx.from.id].tokensThisInterval
     
-//     //give warning to user (only for long term limit)
-//     if(long_term_uses == (LONG_TERM_LIMIT-3)){
-//         ctx.reply(`⚠️ *#Warning ${ctx.from.first_name}* ⚠️\nYou have been flagged for #excessive usage. You will be #muted for ${LONG_TERM_MUTE} seconds if you continue without pause.`, 
-//         {
-//             reply_to_message_id: ctx.message.message_id,
-//             parse_mode: "markdown"
-//         })
-//     }
+    //give warning to user (only for long term limit)
+    if(long_term_uses == (LONG_TERM_LIMIT-3)){
+        ctx.reply(`⚠️ *#Warning ${ctx.from.first_name}* ⚠️\nYou have been flagged for #excessive usage. You will be #muted for ${LONG_TERM_MUTE} seconds if you continue without pause.`, 
+        {
+            reply_to_message_id: ctx.message.message_id,
+            parse_mode: "markdown"
+        })
+    }
 
-//     if (short_term_uses == SHORT_TERM_LIMIT) {
-//         ctx.deleteMessage()
-//         return true;
+    if (short_term_uses == SHORT_TERM_LIMIT) {
+        ctx.deleteMessage()
+        return true;
         
-//         if(ctx.chat.type != "supergroup"){
-//             //ctx.reply(`Please calm down ${ctx.from.first_name}!`)
-//             ctx.deleteMessage()
-//             return true
-//         }
-//         // ctx.reply(`${ctx.from.username} has been temporarily #muted for ${SHORT_TERM_MUTE} seconds`, 
-//         //     {
-//         //         parse_mode: "markdown",
-//         //         //reply_to_message_id: ctx.message.message_id
-//         //     })
-//         bot.telegram.restrictChatMember(ctx.chat.id, ctx.from.id, 
-//             {can_send_messages: false,until_date: Date.now() + SHORT_TERM_MUTE})    
+        if(ctx.chat.type != "supergroup"){
+            //ctx.reply(`Please calm down ${ctx.from.first_name}!`)
+            ctx.deleteMessage()
+            return true
+        }
+        // ctx.reply(`${ctx.from.username} has been temporarily #muted for ${SHORT_TERM_MUTE} seconds`, 
+        //     {
+        //         parse_mode: "markdown",
+        //         //reply_to_message_id: ctx.message.message_id
+        //     })
+        bot.telegram.restrictChatMember(ctx.chat.id, ctx.from.id, 
+            {can_send_messages: false,until_date: Date.now() + SHORT_TERM_MUTE})    
         
-//         return true
-//     }
+        return true
+    }
 
-//     if (mid_term_uses == MID_TERM_LIMIT) {
-//         ctx.deleteMessage()
-//         return true;
+    if (mid_term_uses == MID_TERM_LIMIT) {
+        ctx.deleteMessage()
+        return true;
         
-//         if(ctx.chat.type != "supergroup"){
-//             //ctx.reply(`Please calm down ${ctx.from.first_name}!`)
-//             ctx.deleteMessage()
-//             return true
-//         }
-//         // ctx.reply(`${ctx.from.username} has been temporarily #muted for ${SHORT_TERM_MUTE} seconds`, 
-//         //     {
-//         //         parse_mode: "markdown",
-//         //         //reply_to_message_id: ctx.message.message_id
-//         //     })
-//         bot.telegram.restrictChatMember(ctx.chat.id, ctx.from.id, 
-//             {can_send_messages: false,until_date: Date.now() + MID_TERM_MUTE})    
+        if(ctx.chat.type != "supergroup"){
+            //ctx.reply(`Please calm down ${ctx.from.first_name}!`)
+            ctx.deleteMessage()
+            return true
+        }
+        // ctx.reply(`${ctx.from.username} has been temporarily #muted for ${SHORT_TERM_MUTE} seconds`, 
+        //     {
+        //         parse_mode: "markdown",
+        //         //reply_to_message_id: ctx.message.message_id
+        //     })
+        bot.telegram.restrictChatMember(ctx.chat.id, ctx.from.id, 
+            {can_send_messages: false,until_date: Date.now() + MID_TERM_MUTE})    
         
-//         return true
-//     }
+        return true
+    }
 
-//     if (long_term_uses == LONG_TERM_LIMIT) {
-//         ctx.deleteMessage()
-//         return true;
+    if (long_term_uses == LONG_TERM_LIMIT) {
+        ctx.deleteMessage()
+        return true;
         
-//         if(ctx.chat.type != "supergroup"){
-//             ctx.deleteMessage()
-//             return true
-//         }
-//         ctx.reply(`${ctx.from.username} has been temporarily #muted for ${LONG_TERM_MUTE} seconds`, 
-//             {
-//                 parse_mode: "markdown",
-//                 //reply_to_message_id: ctx.message.message_id
-//             })
-//         bot.telegram.restrictChatMember(ctx.chat.id, ctx.from.id, 
-//             {can_send_messages: false,until_date: Date.now() + LONG_TERM_MUTE})    
+        if(ctx.chat.type != "supergroup"){
+            ctx.deleteMessage()
+            return true
+        }
+        ctx.reply(`${ctx.from.username} has been temporarily #muted for ${LONG_TERM_MUTE} seconds`, 
+            {
+                parse_mode: "markdown",
+                //reply_to_message_id: ctx.message.message_id
+            })
+        bot.telegram.restrictChatMember(ctx.chat.id, ctx.from.id, 
+            {can_send_messages: false,until_date: Date.now() + LONG_TERM_MUTE})    
         
-//         return true
-//     }
+        return true
+    }
 
-//     return false
-// }
+    return false
+}
 
 
 // function numberWithCommas(x) {
