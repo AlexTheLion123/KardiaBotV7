@@ -29,8 +29,8 @@ if (process.env.NODE_ENV === 'production') {
     expressApp.get('/', (req, res) => {
         res.send('Hello World!')
       })
-    expressApp.listen(port, () => {
-        console.log(`Listening on port ${port}`)
+    expressApp.listen(PORT, () => {
+        console.log(`Listening on port ${PORT}`)
     })
     
  } else {
@@ -720,7 +720,7 @@ function abbreviate(num, fixed) {
 
 
 
-bot.launch();
+bot.startPolling();
 // if(process.env.NODE_ENV == 'production'){
 //     expressApp.get('/', (req, res) => {
 //         res.send(`Hello World!\nPort Number: ${PORT}`);
