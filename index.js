@@ -122,7 +122,7 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         return res.json();
     })
     .then((res)=> {
-        console.log(res.json());
+        console.log(res);
         module.exports = bot;
     })
 
