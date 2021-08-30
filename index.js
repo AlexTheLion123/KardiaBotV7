@@ -46,7 +46,7 @@ const whitelist = [1783394599, 845055796, 441474956, 1894125099]; // for users t
 const groupWhitelist = [-1001543285342, -414304361]; //1 - kardiainfo chat, 2 - bottest test
 let chartlink;
 const DELAY = 300000;
-
+let replyMessage;
 
 
 const _telegrafRateLimiter = require("@riddea/telegraf-rate-limiter");
@@ -487,7 +487,7 @@ async function output(name, ctx){
             kaidata = res.tokens.filter(item => item.symbol=='KAI');   
             kaiVals = kaidata[0].histData.slice(1,25);
             kaiVals.reverse(); //data is backwards
-            let replyMessage;
+            
 
             if(name != `KAI`){
                 coindata = res.data.tokens.filter(item => item.symbol==name);
