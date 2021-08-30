@@ -490,7 +490,7 @@ async function output(name, ctx){
             
 
             if(name != `KAI`){
-                coindata = res.data.tokens.filter(item => item.symbol==name);
+                coindata = res.tokens.filter(item => item.symbol==name);
                 
                 kaiprice = kaidata[0].price;
 
@@ -541,7 +541,6 @@ async function output(name, ctx){
                 chartlink = getchart2(kaiVals, name);
                 //return(message_id);
             }
-            
         
             console.log("Just before chart gets sent")
             
