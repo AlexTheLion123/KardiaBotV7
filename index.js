@@ -79,11 +79,11 @@ Here is the breakdown of commands that I support:
 To show the chart for a token, just find the token in the menu or send a message with the token name as a single word. Try it, type in 'kai'
 `
 
-bot.command(["start","menu"],(ctx) => {
+bot.command(["start","menu"], async (ctx) => {
     return mainMenu(ctx);
 });
 
-bot.hears("Back to Menu", ctx => {
+bot.hears("Back to Menu", async ctx => {
     return mainMenu(ctx);
 })
 
@@ -154,11 +154,11 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
             coinlistLowerCase.push(coinlist[i].toLowerCase());
         }
         
-        bot.hears("Tokens", ctx => {
+        bot.hears("Tokens", async ctx => {
             return displayKeyboard(ctx, res, `*Click on a coin*`);
         })
         
-        bot.hears(coinlist, (ctx) =>{   
+        bot.hears(coinlist, async (ctx) =>{   
             console.log("hello");
             output(ctx.message.text, ctx);   
         })
@@ -547,9 +547,8 @@ async function output(name, ctx){
             
             return chartlink;
         })
-        .then(async res=>{ 
-            ctx.reply("hello")   
-            ctx.replyWithPhoto(res, 
+        .then(async res=>{    
+            return await ctx.replyWithPhoto(res, 
                 {   
                     reply_to_message_id: ctx.message.message_id,
                     caption: replyMessage,
