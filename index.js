@@ -1,20 +1,20 @@
-const { Composer } = require('micro-bot');
+// const { Composer } = require('micro-bot');
 
-const bot = new Composer;
+// const bot = new Composer;
 
-bot.start(ctx => {
-    ctx.reply("Good day")
-})
+// bot.start(ctx => {
+//     ctx.reply("Good day")
+// })
 
-bot.command("hello", ctx => {
-    ctx.reply("Hello world");
-})
+// bot.command("hello", ctx => {
+//     ctx.reply("Hello world");
+// })
 
-bot.command("goodby", ctx => {
-    ctx.reply("Goodbye");
-})
+// bot.command("goodby", ctx => {
+//     ctx.reply("Goodbye");
+// })
 
-module.exports = bot;
+// module.exports = bot;
 
 
 
@@ -36,8 +36,8 @@ module.exports = bot;
 // const HERO_URL = 'https://kardia-info-bot.herokuapp.com/';
 
 
-// const { Composer } = require('micro-bot');
-// const bot = new Composer;
+const { Composer } = require('micro-bot');
+const bot = new Composer;
     
 // const QuickChart = require(`quickchart-js`);
 // const whitelist = [1783394599, 845055796, 441474956, 1894125099]; // for users to send without being deleted
@@ -77,29 +77,30 @@ module.exports = bot;
 // To show the chart for a token, just find the token in the menu or send a message with the token name as a single word. Try it, type in 'kai'
 // `
 
-// bot.command(["start","menu"],(ctx) => {
-//     mainMenu(ctx);
-// });
+bot.command(["start","menu"],(ctx) => {
+    mainMenu(ctx);
+});
 
-// function mainMenu(ctx){
-//     ctx.reply(`Hello ${ctx.from.first_name}, I am the KardiaInfo bot, click on a button`, 
-//         {   
-//             parse_mode: 'markdown',
-//             reply_to_message_id: ctx.message.message_id,
-//             reply_markup: {
-//                 keyboard: [
-//                     [{"text": "Tokens"}],
-//                     [{"text": "LP"}],
-//                     [{"text": "Summary"}],
-//                     [{"text": "IFO"}]
-//                 ],
-//                 resize_keyboard: true,
-//                 one_time_keyboard: true,
-//                 selective: true
-//             }
-//         })
-// }
-//
+function mainMenu(ctx){
+    ctx.reply(`Hello ${ctx.from.first_name}, I am the KardiaInfo bot, click on a button`, 
+        {   
+            parse_mode: 'markdown',
+            reply_to_message_id: ctx.message.message_id,
+            reply_markup: {
+                keyboard: [
+                    [{"text": "Tokens"}],
+                    [{"text": "LP"}],
+                    [{"text": "Summary"}],
+                    [{"text": "IFO"}]
+                ],
+                resize_keyboard: true,
+                one_time_keyboard: true,
+                selective: true
+            }
+        })
+}
+
+module.exports = bot;
 
 // bot.on("message", (ctx, next) => {
 //     //disable private chat
@@ -710,5 +711,5 @@ module.exports = bot;
 
 
 
-module.exports = bot;
+
 
