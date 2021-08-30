@@ -99,7 +99,7 @@ function mainMenu(ctx){
             }
         })
 }
-
+//
 
 // bot.on("message", (ctx, next) => {
 //     //disable private chat
