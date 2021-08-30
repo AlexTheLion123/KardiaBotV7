@@ -79,7 +79,6 @@ Here is the breakdown of commands that I support:
 To show the chart for a token, just find the token in the menu or send a message with the token name as a single word. Try it, type in 'kai'
 `
 
-
 bot.command(["start","menu"], async (ctx) => {
     return mainMenu(ctx);
 });
@@ -92,11 +91,11 @@ bot.command("help", async ctx=> {
     return ctx.reply(HELP_MESSAGE, {reply_to_message_id: ctx.message.message_id})
 })
 
-bot.command("IFO", ctx => {
+bot.command(["IFO","ifo"], ctx => {
     showIFO(ctx);
 })
 
-bot.hears("IFO", ctx => {
+bot.hears(["IFO","ifo"], ctx => {
     showIFO(ctx);
 })
 
@@ -237,17 +236,6 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
 
     module.exports = bot;
 
-
-
-
-
-
-
-
-
-
-
-
 function showIFO(ctx){
     ctx.reply("Follow the link to find out more about the IFO with KardiaInfo", 
         {
@@ -325,7 +313,18 @@ async function showTopTenPrices(ctx){
                 topTenMessage += spacedSymbols[i] + `|\t\t$${spacedPrices[i]}\n`;
             }
             topTenMessage += "</pre>"
-            return ctx.reply(topTenMessage, {reply_to_message_id: ctx.message.message_id, parse_mode: "HTML"});
+            return ctx.reply(topTenMessage, 
+                {
+                    reply_to_message_id: ctx.message.message_id, 
+                    parse_mode: "HTML",
+                    reply_markup: {
+                        inline_keyboard:[
+                            [
+                                {text: 'Get More Token Info', url: 'http://kardiainfo.com/tokens'}
+                            ]
+                        ]
+                    }
+                });
             
     })
 }
