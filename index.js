@@ -49,17 +49,17 @@ const DELAY = 300000;
 
 
 
-// const _telegrafRateLimiter = require("@riddea/telegraf-rate-limiter");
-// SHORT_TERM_LIMIT = 2; // 2 charts per 10 seconds
-// SHORT_TERM_MUTE = 10;//seconds
-// MID_TERM_LIMIT = 3; // 3 charts per minute
-// MID_TERM_MUTE = 60; 
-// LONG_TERM_LIMIT = 10; // 10 charts per hour
-// LONG_TERM_MUTE = 3600;//seconds
-// const short_term_rateLimiter = new _telegrafRateLimiter.RateLimiter(SHORT_TERM_LIMIT, SHORT_TERM_MUTE*1000);
-// const mid_term_rateLimiter = new _telegrafRateLimiter.RateLimiter(MID_TERM_LIMIT, MID_TERM_MUTE*1000);
-// const long_term_rateLimiter = new _telegrafRateLimiter.RateLimiter(LONG_TERM_LIMIT, LONG_TERM_MUTE*1000);
-// //const rateLimiter = new RateLimiter(1,2000) // e.g. each user can only send 1 message per 2 seconds
+const _telegrafRateLimiter = require("@riddea/telegraf-rate-limiter");
+SHORT_TERM_LIMIT = 2; // 2 charts per 10 seconds
+SHORT_TERM_MUTE = 10;//seconds
+MID_TERM_LIMIT = 3; // 3 charts per minute
+MID_TERM_MUTE = 60; 
+LONG_TERM_LIMIT = 10; // 10 charts per hour
+LONG_TERM_MUTE = 3600;//seconds
+const short_term_rateLimiter = new _telegrafRateLimiter.RateLimiter(SHORT_TERM_LIMIT, SHORT_TERM_MUTE*1000);
+const mid_term_rateLimiter = new _telegrafRateLimiter.RateLimiter(MID_TERM_LIMIT, MID_TERM_MUTE*1000);
+const long_term_rateLimiter = new _telegrafRateLimiter.RateLimiter(LONG_TERM_LIMIT, LONG_TERM_MUTE*1000);
+//const rateLimiter = new RateLimiter(1,2000) // e.g. each user can only send 1 message per 2 seconds
 
 // let topTenArray = [];
 // let coinlist = [];
