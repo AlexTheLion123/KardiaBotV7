@@ -711,14 +711,13 @@ function abbreviate(num, fixed) {
 if(process.env.NODE_ENV == 'production'){
     expressApp.get('/', (req, res) => {
         res.send(`Hello World!\nPort Number: ${PORT}`);
-
-      });
-      expressApp.listen(PORT, () => {
+    });
+    expressApp.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);
         bot.start(ctx => {
-            return ctx.reply("Hello World!")
+            ctx.reply("Hello World!")
         });
-      });
+    });
 } else {
     bot.launch();
 }
