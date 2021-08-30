@@ -484,69 +484,64 @@ async function output(name, ctx){
             return res.json()
         })
         .then(res => {
-            console.log(res);
-            try {
-                kaidata = res.data.tokens.filter(item => item.symbol=='KAI');   
-                kaiVals = kaidata[0].histData.slice(1,25);
-                kaiVals.reverse(); //data is backwards
-                let replyMessage;
+            kaidata = res.tokens.filter(item => item.symbol=='KAI');   
+            kaiVals = kaidata[0].histData.slice(1,25);
+            kaiVals.reverse(); //data is backwards
+            let replyMessage;
 
-                if(name != `KAI`){
-                    coindata = res.data.tokens.filter(item => item.symbol==name);
-                    
-                    kaiprice = kaidata[0].price;
+            if(name != `KAI`){
+                coindata = res.data.tokens.filter(item => item.symbol==name);
+                
+                kaiprice = kaidata[0].price;
 
-                    if(name == `BossDoge` | name == `VNDT` | name == `VNDC`){
-                        priceusd = parseFloat(coindata[0].price, 2).toPrecision(3);
-                        pricekai = parseFloat(priceusd/kaiprice, 2).toPrecision(3);
-                    } else {
-                        priceusd = Math.round(coindata[0].price * 10000)/10000;
-                        pricekai = Math.round(priceusd/kaiprice * 10000)/10000;
-                    }
-                    
-                    dayChange = Math.round(coindata[0].dayChange * 10000)/10000;
-                    tvl = Math.round(coindata[0].tvl);
-                    mcap = Math.round(coindata[0].mcap);
-                    supply = numberWithCommas(Math.round(coindata[0].supply))
-                    
-                    //add commas
-                    priceusd = numberWithCommas(priceusd);
-                    pricekai = numberWithCommas(pricekai);
-                    tvl = numberWithCommas(tvl);
-                    mcap = numberWithCommas(mcap);
-                    
-
-                    replyMessage = `Price USD: *\$${priceusd}*\nDaily Change: *${dayChange}%*\nPrice KAI: *${pricekai} KAI*\nTotal Supply: *${supply}*\nMarket Cap: *$${mcap}*\nTVL: *$${tvl}*` 
-
-                    usdVals = coindata[0].histData.slice(1,25);
-                    usdVals.reverse();
-                    
-                    //if new coin, chart cannot be plotted
-                    if(usdVals.length<24){
-                        ctx.reply(`Not enough historical data to construct a chart for *${name}*. Coin hasn't been live for 24 hours yet.\n\n${replyMessage}`, {reply_to_message_id: ctx.message.message_id, parse_mode: "markdown"})
-                        return
-                    }
-
-                    chartdata = usdVals.map(function(n, i) { return n / kaiVals[i]; });
-                    chartlink = getchart2(chartdata, name)
-                    
-
+                if(name == `BossDoge` | name == `VNDT` | name == `VNDC`){
+                    priceusd = parseFloat(coindata[0].price, 2).toPrecision(3);
+                    pricekai = parseFloat(priceusd/kaiprice, 2).toPrecision(3);
                 } else {
-                    kaiprice = numberWithCommas(Math.round(kaidata[0].price * 10000)/10000);
-                    dayChange = numberWithCommas(Math.round(kaidata[0].dayChange * 100)/100);
-                    tvl = numberWithCommas(Math.round(kaidata[0].tvl));
-                    mcap = numberWithCommas(Math.round(kaidata[0].mcap));
-                    supply = numberWithCommas(Math.round(kaidata[0].supply))
-                    
-                    replyMessage = `\nPrice USD: *$${kaiprice}*\nDaily Change: *${dayChange}%*\nTotal Supply: *${supply}*\nMarket Cap: *$${mcap}*\nTVL: *$${tvl}*`  
-
-                    chartlink = getchart2(kaiVals, name);
-                    //return(message_id);
+                    priceusd = Math.round(coindata[0].price * 10000)/10000;
+                    pricekai = Math.round(priceusd/kaiprice * 10000)/10000;
                 }
-                return chartlink;
-            }catch(error){
-                console.log(error)
+                
+                dayChange = Math.round(coindata[0].dayChange * 10000)/10000;
+                tvl = Math.round(coindata[0].tvl);
+                mcap = Math.round(coindata[0].mcap);
+                supply = numberWithCommas(Math.round(coindata[0].supply))
+                
+                //add commas
+                priceusd = numberWithCommas(priceusd);
+                pricekai = numberWithCommas(pricekai);
+                tvl = numberWithCommas(tvl);
+                mcap = numberWithCommas(mcap);
+                
+
+                replyMessage = `Price USD: *\$${priceusd}*\nDaily Change: *${dayChange}%*\nPrice KAI: *${pricekai} KAI*\nTotal Supply: *${supply}*\nMarket Cap: *$${mcap}*\nTVL: *$${tvl}*` 
+
+                usdVals = coindata[0].histData.slice(1,25);
+                usdVals.reverse();
+                
+                //if new coin, chart cannot be plotted
+                if(usdVals.length<24){
+                    ctx.reply(`Not enough historical data to construct a chart for *${name}*. Coin hasn't been live for 24 hours yet.\n\n${replyMessage}`, {reply_to_message_id: ctx.message.message_id, parse_mode: "markdown"})
+                    return
+                }
+
+                chartdata = usdVals.map(function(n, i) { return n / kaiVals[i]; });
+                chartlink = getchart2(chartdata, name)
+                
+
+            } else {
+                kaiprice = numberWithCommas(Math.round(kaidata[0].price * 10000)/10000);
+                dayChange = numberWithCommas(Math.round(kaidata[0].dayChange * 100)/100);
+                tvl = numberWithCommas(Math.round(kaidata[0].tvl));
+                mcap = numberWithCommas(Math.round(kaidata[0].mcap));
+                supply = numberWithCommas(Math.round(kaidata[0].supply))
+                
+                replyMessage = `\nPrice USD: *$${kaiprice}*\nDaily Change: *${dayChange}%*\nTotal Supply: *${supply}*\nMarket Cap: *$${mcap}*\nTVL: *$${tvl}*`  
+
+                chartlink = getchart2(kaiVals, name);
+                //return(message_id);
             }
+            
         
             console.log("Just before chart gets sent")
             ctx.replyWithPhoto(res, 
