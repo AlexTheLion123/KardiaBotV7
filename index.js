@@ -83,6 +83,10 @@ bot.command(["start","menu"],(ctx) => {
     mainMenu(ctx);
 });
 
+bot.hears("Back to Menu", ctx => {
+    mainMenu(ctx);
+})
+
 function mainMenu(ctx){
     ctx.reply(`Hello ${ctx.from.first_name}, I am the KardiaInfo bot, click on a button`, 
         {   
@@ -167,14 +171,11 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         // })
 
         
-        bot.hears("Back to Menu", ctx => {
-            ctx.reply("hello");
-        })
+        
 
     })
-    .then(()=>{
-        module.exports = bot;
-    })
+    module.exports = bot;
+    
 
 //         bot.command("price", ctx => {
 //             const input = ctx.message.text.split(" ");
