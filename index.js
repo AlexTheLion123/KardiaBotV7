@@ -1,28 +1,5 @@
-// const { Composer } = require('micro-bot');
-
-// const bot = new Composer;
-
-// bot.start(ctx => {
-//     ctx.reply("Good day")
-// })
-
-// bot.command("hello", ctx => {
-//     ctx.reply("Hello world");
-// })
-
-// bot.command("goodby", ctx => {
-//     ctx.reply("Goodbye");
-// })
-
-// module.exports = bot;
-
-
-
-
-
 const { Composer } = require('micro-bot');
 const bot = new Composer;
-
 
 require('dotenv').config();
 
@@ -34,12 +11,6 @@ const fetch = require('node-fetch');
 //test api: 1962673670:AAHtYB7Y1bW9zkpAuOQCR3qRmGeZthxIJSc
 const apiurl = process.env.TOKEN_API;
 const apiLPurl = process.env.LP_API;
-
-
-const HERO_URL = 'https://kardia-info-bot.herokuapp.com/';
-
-
-
     
 const QuickChart = require(`quickchart-js`);
 const whitelist = [1783394599, 845055796, 441474956, 1894125099]; // for users to send without being deleted
@@ -47,7 +18,6 @@ const groupWhitelist = [-1001543285342, -414304361]; //1 - kardiainfo chat, 2 - 
 let chartlink;
 const DELAY = 300000;
 let replyMessage;
-
 
 const _telegrafRateLimiter = require("@riddea/telegraf-rate-limiter");
 SHORT_TERM_LIMIT = 2; // 2 charts per 10 seconds
@@ -114,6 +84,7 @@ The list of commands I support are as follows:
     }
 })
 
+// optional: to disable private chat functionality
 // bot.on("message", (ctx, next) => {
 //     //disable private chat
 
@@ -125,7 +96,7 @@ The list of commands I support are as follows:
 //     next();
 // });
 
-fetch('https://kardia-info-backend.herokuapp.com/api/')
+fetch(apiurl)
     .then((res) => { 
         return res.json();
     })
@@ -275,7 +246,7 @@ async function showTopTenPrices(ctx){
         return;
     }
 
-    await fetch('https://kardia-info-backend.herokuapp.com/api/')
+    await fetch(apiurl)
         .then((res) => { 
             return res.json();
         })
@@ -361,7 +332,7 @@ function compareTvl(a,b){ //used to sort
 }
 
 async function onLpCommand(){ 
-    await axios.get('http://api.kardiainfo.com/lps')
+    await axios.get(apiLPurl)
         .then(res => { // get array of objects
             lpData = res.data.lps;
             return lpData;
@@ -474,7 +445,7 @@ async function output(name, ctx){
         name = "KPHI"
     }
     
-    await fetch('https://kardia-info-backend.herokuapp.com/api/')
+    await fetch(apiurl)
         .then((res) => {
             return res.json()
         })
