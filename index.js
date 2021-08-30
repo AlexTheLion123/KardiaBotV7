@@ -158,17 +158,17 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
             displayKeyboard(ctx, res, `*Click on a coin*`);
         })
 
-        // bot.hears(coinlist, (ctx) =>{      
-        //     output(ctx.message.text, ctx);   
-        // })
+        bot.hears(coinlist, (ctx) =>{      
+            output(ctx.message.text, ctx);   
+        })
 
-        // bot.hears(coinlistLowerCase, (ctx) => {
-        //     if(ctx.message.text == "bossdoge"){
-        //         output("BossDoge", ctx);
-        //     } else {
-        //         output(ctx.message.text.toUpperCase(), ctx);
-        //     }
-        // })
+        bot.hears(coinlistLowerCase, (ctx) => {
+            if(ctx.message.text == "bossdoge"){
+                output("BossDoge", ctx);
+            } else {
+                output(ctx.message.text.toUpperCase(), ctx);
+            }
+        })
 
         
         
@@ -462,112 +462,112 @@ function displayKeyboard(ctx, keyboardData, message){
             
 }
 
-// function output(name, ctx){
-//     isLimited = checkRateLimited(ctx);
-//     if(isLimited){
-//         return;
-//     }
+function output(name, ctx){
+    isLimited = checkRateLimited(ctx);
+    if(isLimited){
+        return;
+    }
     
     
-//     let sender_id = ctx.from.id
-//     ctx.replyWithChatAction("upload_photo");
+    let sender_id = ctx.from.id
+    ctx.replyWithChatAction("upload_photo");
     
-//     if(name=="LTD"){
-//         name = "LTD Token"
-//     }
-//     if(name=="KEPHI"){
-//         name = "KPHI"
-//     }
+    if(name=="LTD"){
+        name = "LTD Token"
+    }
+    if(name=="KEPHI"){
+        name = "KPHI"
+    }
 
-//     axios.get('https://kardia-info-backend.herokuapp.com/api/')
-//         .then( async (res) => {
-//             try {
-//                 kaidata = res.data.tokens.filter(item => item.symbol=='KAI');   
-//                 kaiVals = kaidata[0].histData.slice(1,25);
-//                 kaiVals.reverse(); //data is backwards
-//                 let replyMessage;
+    axios.get('https://kardia-info-backend.herokuapp.com/api/')
+        .then( async (res) => {
+            try {
+                kaidata = res.data.tokens.filter(item => item.symbol=='KAI');   
+                kaiVals = kaidata[0].histData.slice(1,25);
+                kaiVals.reverse(); //data is backwards
+                let replyMessage;
 
-//                 if(name != `KAI`){
-//                     coindata = res.data.tokens.filter(item => item.symbol==name);
+                if(name != `KAI`){
+                    coindata = res.data.tokens.filter(item => item.symbol==name);
                     
-//                     kaiprice = kaidata[0].price;
+                    kaiprice = kaidata[0].price;
 
-//                     if(name == `BossDoge` | name == `VNDT` | name == `VNDC`){
-//                         priceusd = parseFloat(coindata[0].price, 2).toPrecision(3);
-//                         pricekai = parseFloat(priceusd/kaiprice, 2).toPrecision(3);
-//                     } else {
-//                         priceusd = Math.round(coindata[0].price * 10000)/10000;
-//                         pricekai = Math.round(priceusd/kaiprice * 10000)/10000;
-//                     }
+                    if(name == `BossDoge` | name == `VNDT` | name == `VNDC`){
+                        priceusd = parseFloat(coindata[0].price, 2).toPrecision(3);
+                        pricekai = parseFloat(priceusd/kaiprice, 2).toPrecision(3);
+                    } else {
+                        priceusd = Math.round(coindata[0].price * 10000)/10000;
+                        pricekai = Math.round(priceusd/kaiprice * 10000)/10000;
+                    }
                     
-//                     dayChange = Math.round(coindata[0].dayChange * 10000)/10000;
-//                     tvl = Math.round(coindata[0].tvl);
-//                     mcap = Math.round(coindata[0].mcap);
-//                     supply = numberWithCommas(Math.round(coindata[0].supply))
+                    dayChange = Math.round(coindata[0].dayChange * 10000)/10000;
+                    tvl = Math.round(coindata[0].tvl);
+                    mcap = Math.round(coindata[0].mcap);
+                    supply = numberWithCommas(Math.round(coindata[0].supply))
                     
-//                     //add commas
-//                     priceusd = numberWithCommas(priceusd);
-//                     pricekai = numberWithCommas(pricekai);
-//                     tvl = numberWithCommas(tvl);
-//                     mcap = numberWithCommas(mcap);
-                    
-
-//                     replyMessage = `Price USD: *\$${priceusd}*\nDaily Change: *${dayChange}%*\nPrice KAI: *${pricekai} KAI*\nTotal Supply: *${supply}*\nMarket Cap: *$${mcap}*\nTVL: *$${tvl}*` 
-
-//                     usdVals = coindata[0].histData.slice(1,25);
-//                     usdVals.reverse();
-                    
-//                     //if new coin, chart cannot be plotted
-//                     if(usdVals.length<24){
-//                         ctx.reply(`Not enough historical data to construct a chart for *${name}*. Coin hasn't been live for 24 hours yet.\n\n${replyMessage}`, {reply_to_message_id: ctx.message.message_id, parse_mode: "markdown"})
-//                         return
-//                     }
-
-//                     chartdata = usdVals.map(function(n, i) { return n / kaiVals[i]; });
-//                     chartlink = getchart2(chartdata, name)
+                    //add commas
+                    priceusd = numberWithCommas(priceusd);
+                    pricekai = numberWithCommas(pricekai);
+                    tvl = numberWithCommas(tvl);
+                    mcap = numberWithCommas(mcap);
                     
 
-//                 } else {
-//                     kaiprice = numberWithCommas(Math.round(kaidata[0].price * 10000)/10000);
-//                     dayChange = numberWithCommas(Math.round(kaidata[0].dayChange * 100)/100);
-//                     tvl = numberWithCommas(Math.round(kaidata[0].tvl));
-//                     mcap = numberWithCommas(Math.round(kaidata[0].mcap));
-//                     supply = numberWithCommas(Math.round(kaidata[0].supply))
-                    
-//                     replyMessage = `\nPrice USD: *$${kaiprice}*\nDaily Change: *${dayChange}%*\nTotal Supply: *${supply}*\nMarket Cap: *$${mcap}*\nTVL: *$${tvl}*`  
+                    replyMessage = `Price USD: *\$${priceusd}*\nDaily Change: *${dayChange}%*\nPrice KAI: *${pricekai} KAI*\nTotal Supply: *${supply}*\nMarket Cap: *$${mcap}*\nTVL: *$${tvl}*` 
 
-//                     chartlink = getchart2(kaiVals, name);
-//                     //return(message_id);
-//                 }
+                    usdVals = coindata[0].histData.slice(1,25);
+                    usdVals.reverse();
+                    
+                    //if new coin, chart cannot be plotted
+                    if(usdVals.length<24){
+                        ctx.reply(`Not enough historical data to construct a chart for *${name}*. Coin hasn't been live for 24 hours yet.\n\n${replyMessage}`, {reply_to_message_id: ctx.message.message_id, parse_mode: "markdown"})
+                        return
+                    }
+
+                    chartdata = usdVals.map(function(n, i) { return n / kaiVals[i]; });
+                    chartlink = getchart2(chartdata, name)
+                    
+
+                } else {
+                    kaiprice = numberWithCommas(Math.round(kaidata[0].price * 10000)/10000);
+                    dayChange = numberWithCommas(Math.round(kaidata[0].dayChange * 100)/100);
+                    tvl = numberWithCommas(Math.round(kaidata[0].tvl));
+                    mcap = numberWithCommas(Math.round(kaidata[0].mcap));
+                    supply = numberWithCommas(Math.round(kaidata[0].supply))
+                    
+                    replyMessage = `\nPrice USD: *$${kaiprice}*\nDaily Change: *${dayChange}%*\nTotal Supply: *${supply}*\nMarket Cap: *$${mcap}*\nTVL: *$${tvl}*`  
+
+                    chartlink = getchart2(kaiVals, name);
+                    //return(message_id);
+                }
                 
                 
-//                 await ctx.replyWithPhoto(chartlink, 
-//                     {   
-//                         reply_to_message_id: ctx.message.message_id,
-//                         caption: replyMessage,
-//                         parse_mode: "markdown",
-//                         reply_markup: {
-//                             inline_keyboard:[
-//                                 [
-//                                     {text: `Get more ${name} Info`, url: `kardiainfo.com/tokens/${name.replace(/\s+/g, '_')}`}
-//                                 ]
-//                             ]
-//                         }
-//                     })
-//                 .then(res => {
-//                     if(!whitelist.includes(sender_id)){
-//                         // setTimeout(() => {
-//                         //     bot.telegram.deleteMessage(ctx.chat.id, res.message_id)
-//                         //     ctx.deleteMessage()
-//                         // },DELAY)
-//                     }
-//                 })                
+                await ctx.replyWithPhoto(chartlink, 
+                    {   
+                        reply_to_message_id: ctx.message.message_id,
+                        caption: replyMessage,
+                        parse_mode: "markdown",
+                        reply_markup: {
+                            inline_keyboard:[
+                                [
+                                    {text: `Get more ${name} Info`, url: `kardiainfo.com/tokens/${name.replace(/\s+/g, '_')}`}
+                                ]
+                            ]
+                        }
+                    })
+                .then(res => {
+                    if(!whitelist.includes(sender_id)){
+                        // setTimeout(() => {
+                        //     bot.telegram.deleteMessage(ctx.chat.id, res.message_id)
+                        //     ctx.deleteMessage()
+                        // },DELAY)
+                    }
+                })                
                 
-//             }catch(error){
-//                 console.log(error)
-//             }
-//         })
-// }            
+            }catch(error){
+                console.log(error)
+            }
+        })
+}            
 
 // function checkRateLimited(ctx){
 //     const short_term_limited = short_term_rateLimiter.take(ctx.from.id);
