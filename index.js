@@ -106,7 +106,6 @@ function mainMenu(ctx){
 
 bot.on("message", (ctx, next) => {
     //disable private chat
-    console.log(ctx.chat.type);
 
     if(ctx.chat.type == "private"){
         ctx.reply("This bot does not support private messaging, please use me in a group environment");
@@ -116,12 +115,19 @@ bot.on("message", (ctx, next) => {
     next();
 });
 
-module.exports = bot;
 
-// fetch('https://kardia-info-backend.herokuapp.com/api/')
-//     .then((res) => { 
-//         return res.json();
-//     })
+
+fetch('https://kardia-info-backend.herokuapp.com/api/')
+    .then((res) => { 
+        return res.json();
+    })
+    .then((res)=> {
+        console.log(res.json());
+        module.exports = bot;
+    })
+
+
+    
 //     .then((jsonData) => {
 //         jsonData.tokens.sort(compareTvl);
 //         jsonData.tokens.reverse();
