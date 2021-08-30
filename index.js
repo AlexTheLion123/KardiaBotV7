@@ -160,7 +160,7 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         
         bot.hears(coinlist, async (ctx) =>{   
             console.log("hello");
-            output(ctx.message.text, ctx);   
+            return output(ctx.message.text, ctx);   
         })
     })
 
