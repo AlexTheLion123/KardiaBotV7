@@ -14,7 +14,7 @@ const expressApp = express();
 const apiurl = process.env.TOKEN_API;
 const apiLPurl = process.env.LP_API;
 
-const PORT = process.env.PORT || 3000;
+//const PORT = process.env.PORT || 3000;
 const HERO_URL = 'https://kardia-info-bot.herokuapp.com/';
 
 let bot;
