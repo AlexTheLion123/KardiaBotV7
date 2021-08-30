@@ -470,7 +470,7 @@ async function output(name, ctx){
     
     let sender_id = ctx.from.id
     console.log("just before reply with chat action")
-    ctx.replyWithChatAction("upload_photo");
+    //ctx.replyWithChatAction("upload_photo");
     
     if(name=="LTD"){
         name = "LTD Token"
