@@ -160,7 +160,7 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         
         bot.hears(coinlist, (ctx) =>{   
             console.log("hello")   ;
-            //output(ctx.message.text, ctx);   
+            output(ctx.message.text, ctx);   
         })
     })
 
@@ -539,7 +539,7 @@ function output(name, ctx){
                     //return(message_id);
                 }
                 
-                
+                console.log("laskdfjaklsfjsldkafj")
                 await ctx.replyWithPhoto(chartlink, 
                     {   
                         reply_to_message_id: ctx.message.message_id,
