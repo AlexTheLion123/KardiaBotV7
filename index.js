@@ -157,6 +157,10 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         bot.hears("Tokens", ctx => {
             displayKeyboard(ctx, res, `*Click on a coin*`);
         })
+
+        bot.hears("alsdkjalskfj", ctx => {
+            ctx.reply("asdfasfdsfkjasfh");
+        })
         
         bot.hears(coinlist, (ctx) =>{      
             output(ctx.message.text, ctx);   
