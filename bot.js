@@ -18,20 +18,22 @@ let bot;
 if (process.env.NODE_ENV === 'production') {
     //method 1 includes code at the end
     bot = new Telegraf(process.env.BOT_TOKEN);
-    // bot.telegram.setWebhook(`${HERO_URL}/bot${process.env.BOT_TOKEN}`);
-    // expressApp.use(bot.webhookCallback(`/bot${process.env.BOT_TOKEN}`));
+    bot.telegram.setWebhook(`${HERO_URL}/bot${process.env.BOT_TOKEN}`);
+    expressApp.use(bot.webhookCallback(`/bot${process.env.BOT_TOKEN}`));
 
     //method 2 no code at the end
-    // bot.telegram.setWebhook(`${HERO_URL}/bot${process.env.BOT_TOKEN}`);
+    //bot.telegram.setWebhook(`${HERO_URL}/bot${process.env.BOT_TOKEN}`);
     // bot.startWebhook(`/bot${process.env.BOT_TOKEN}`, null, PORT)
-
+    
     //method 3 long polling, bot.startPolling() at the end
-    expressApp.get('/', (req, res) => {
-        res.send('Hello World!')
-      })
-    expressApp.listen(PORT, () => {
-        console.log(`Listening on port ${PORT}`)
-    })
+    // expressApp.get('/', (req, res) => {
+    //     res.send('Hello World!')
+    //   })
+    // expressApp.listen(PORT, () => {
+    //     console.log(`Listening on port ${PORT}`)
+    // })
+
+    //https://api.telegram.org/bot<token>/setWebhook?url=<endpoint>
     
  } else {
     bot = new Telegraf('1962673670:AAHtYB7Y1bW9zkpAuOQCR3qRmGeZthxIJSc');
@@ -720,17 +722,18 @@ function abbreviate(num, fixed) {
 
 
 
-bot.startPolling();
-// if(process.env.NODE_ENV == 'production'){
-//     expressApp.get('/', (req, res) => {
-//         res.send(`Hello World!\nPort Number: ${PORT}`);
-//     });
-//     expressApp.listen(PORT, () => {
-//         console.log(`Server running on port ${PORT}`);
+
+if(process.env.NODE_ENV == 'production'){
+    expressApp.get('/', (req, res) => {
+        res.send(`Hello World!\nPort Number: ${PORT}`);
+    });
+    expressApp.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
         
-//     });
+    });
 
-// } else {
-//     bot.launch();
-// }
+} else {
+    bot.launch();
+}
 
+//bot.startPolling();
