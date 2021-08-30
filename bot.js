@@ -710,6 +710,10 @@ function abbreviate(num, fixed) {
 if(process.env.NODE_ENV == 'production'){
     expressApp.get('/', (req, res) => {
         res.send(`Hello World!\nPort Number: ${PORT}`);
+
+        bot.start(ctx => {
+            return ctx.reply("Hello World!")
+        });
       });
       expressApp.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);
