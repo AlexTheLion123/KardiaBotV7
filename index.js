@@ -167,7 +167,7 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         // })
 
         
-        bot.hears("Back to Menu", ctx => {
+        bot.hears("BacktoMenu", ctx => {
             ctx.reply("Hello");
         })
 
