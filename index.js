@@ -478,9 +478,8 @@ async function output(name, ctx){
     if(name=="KEPHI"){
         name = "KPHI"
     }
-    console.log("just before fetch");
+
     await fetch('https://kardia-info-backend.herokuapp.com/api/')
-        .then(()=> console.log("hello inside"))
         .then( async (res) => {
             console.log("just inside axios");
             try {
@@ -541,25 +540,26 @@ async function output(name, ctx){
                     chartlink = getchart2(kaiVals, name);
                     //return(message_id);
                 }
-                
-                console.log("Just before chart gets sent")
-                await ctx.replyWithPhoto(chartlink, 
-                    {   
-                        reply_to_message_id: ctx.message.message_id,
-                        caption: replyMessage,
-                        parse_mode: "markdown",
-                        reply_markup: {
-                            inline_keyboard:[
-                                [
-                                    {text: `Get more ${name} Info`, url: `kardiainfo.com/tokens/${name.replace(/\s+/g, '_')}`}
-                                ]
-                            ]
-                        }
-                    })
-            
+                return chartlink;
             }catch(error){
                 console.log(error)
             }
+        })
+        .then(res => {
+            console.log("Just before chart gets sent")
+            await ctx.replyWithPhoto(res, 
+                {   
+                    reply_to_message_id: ctx.message.message_id,
+                    caption: replyMessage,
+                    parse_mode: "markdown",
+                    reply_markup: {
+                        inline_keyboard:[
+                            [
+                                {text: `Get more ${name} Info`, url: `kardiainfo.com/tokens/${name.replace(/\s+/g, '_')}`}
+                            ]
+                        ]
+                    }
+                })
         })//end of fetch .then
     console.log("just after fetch")
 }            
