@@ -142,21 +142,20 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         coinKeyboard = getKeyboardData(coinlist);
         return coinKeyboard;
     })
-    .then(res => {
-        res.push([{"text": "Back to Menu"}])
+    // .then(res => {
+    //     res.push([{"text": "Back to Menu"}])
         
-        let coinlistLowerCase = [];
-        for(i=0;i<coinlist.length; i++){ //also allow user to type in lower case
-            coinlistLowerCase.push(coinlist[i].toLowerCase());
-        }
+    //     let coinlistLowerCase = [];
+    //     for(i=0;i<coinlist.length; i++){ //also allow user to type in lower case
+    //         coinlistLowerCase.push(coinlist[i].toLowerCase());
+    //     }
         
-        bot.hears("Tokens", ctx => {
-            displayKeyboard(ctx, res, `*Click on a coin*`);
-        })
-        module.exports = bot;
-        return 2;
-    })
-    .catch(res => console.log(res))
+    //     bot.hears("Tokens", ctx => {
+    //         displayKeyboard(ctx, res, `*Click on a coin*`);
+    //     })
+        
+    // })
+    module.exports = bot;
     
 
 //         bot.hears(coinlist, (ctx) =>{      
