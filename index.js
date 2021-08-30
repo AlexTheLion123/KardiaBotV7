@@ -153,26 +153,24 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
         bot.hears("Tokens", ctx => {
             displayKeyboard(ctx, res, `*Click on a coin*`);
         })
-        
+
+        bot.hears(coinlist, (ctx) =>{      
+            output(ctx.message.text, ctx);   
+        })
+
+        bot.hears(coinlistLowerCase, (ctx) => {
+            if(ctx.message.text == "bossdoge"){
+                output("BossDoge", ctx);
+            } else {
+                output(ctx.message.text.toUpperCase(), ctx);
+            }
+        })
+
+        bot.hears("Back to Menu", ctx => {
+            mainMenu(ctx);
+        })//
     })
     module.exports = bot;
-    
-
-//         bot.hears(coinlist, (ctx) =>{      
-//             output(ctx.message.text, ctx);   
-//         })
-
-//         bot.hears(coinlistLowerCase, (ctx) => {
-//             if(ctx.message.text == "bossdoge"){
-//                 output("BossDoge", ctx);
-//             } else {
-//                 output(ctx.message.text.toUpperCase(), ctx);
-//             }
-//         })
-
-//         bot.hears("Back to Menu", ctx => {
-//             mainMenu(ctx);
-//         })//
 
 //         bot.command("price", ctx => {
 //             const input = ctx.message.text.split(" ");
