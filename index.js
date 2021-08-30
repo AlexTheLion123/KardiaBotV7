@@ -121,34 +121,29 @@ fetch('https://kardia-info-backend.herokuapp.com/api/')
     .then((res) => { 
         return res.json();
     })
-    .then((res)=> {
-        console.log(res);
+    .then((jsonData) => {
+        jsonData.tokens.sort(compareTvl);
+        jsonData.tokens.reverse();
+
+        // for the info command, doesn't need to fetch list of top ten each time, only when prices included does it fetch each time
+        tokenData = jsonData.tokens;
+        topTenArray = tokenData.slice(0,10);
+        topTenSymbols = topTenArray.map(item => item.symbol); 
+
+
+        coinlist = jsonData.tokens.map(item => item.symbol) // uses same reference as tokenData
         
+        //replace LTD
+        let index = coinlist.indexOf("LTD Token");
+        if (index !== -1) {
+            coinlist[index] = "LTD";
+        }
+
+        coinKeyboard = getKeyboardData(coinlist);
+        console.log(coinKeyboard);
+        return coinKeyboard;
     })
-
     module.exports = bot;
-    
-//     .then((jsonData) => {
-//         jsonData.tokens.sort(compareTvl);
-//         jsonData.tokens.reverse();
-
-//         // for the info command, doesn't need to fetch list of top ten each time, only when prices included does it fetch each time
-//         tokenData = jsonData.tokens;
-//         topTenArray = tokenData.slice(0,10);
-//         topTenSymbols = topTenArray.map(item => item.symbol); 
-
-
-//         coinlist = jsonData.tokens.map(item => item.symbol) // uses same reference as tokenData
-        
-//         //replace LTD
-//         let index = coinlist.indexOf("LTD Token");
-//         if (index !== -1) {
-//             coinlist[index] = "LTD";
-//         }
-
-//         coinKeyboard = getKeyboardData(coinlist);
-//         return coinKeyboard;
-//     })
 //     .then(res => {
 //         res.push([{"text": "Back to Menu"}])
         
