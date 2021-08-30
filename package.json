@@ -9,7 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@riddea/telegraf-rate-limiter": "^1.0.7",
+    "axois": "^0.0.1-security",
     "micro-bot": "^2.5.3",
+    "node-fetch": "^2.6.1",
     "telegraf": "3.33"
   }
 }

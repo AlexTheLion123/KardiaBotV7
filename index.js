@@ -18,12 +18,13 @@
 
 
 
+
+
+
 require('dotenv').config();
 
 const axios = require(`axios`);
 const fetch = require('node-fetch');
-const express = require('express');
-const expressApp = express();
 
 //real api: process.env.BOT_TOKEN
 //test api: 1867307172:AAHWyVpnZyxMSDqAJ38y7Jr1bqdi1LIA-o0
@@ -34,48 +35,19 @@ const apiLPurl = process.env.LP_API;
 //const PORT = process.env.PORT || 3000;
 const HERO_URL = 'https://kardia-info-bot.herokuapp.com/';
 
-// let bot;
-// if (process.env.NODE_ENV === 'production') {
-    // const { Composer } = require('micro-bot');
-    // const bot = new Composer;
-    
-    bot = new Telegraf(process.env.BOT_TOKEN);
-    
-    //method 1 includes code at the end
-    bot.telegram.setWebhook(`${HERO_URL}/bot${process.env.BOT_TOKEN}`);
-    expressApp.use(bot.webhookCallback(`/bot${process.env.BOT_TOKEN}`));
 
-    //method 2 no code at the end
-    //bot.telegram.setWebhook(`${HERO_URL}/bot${process.env.BOT_TOKEN}`);
-    //bot.startWebhook(`/bot${process.env.BOT_TOKEN}`, null, PORT)
+const { Composer } = require('micro-bot');
+const bot = new Composer;
     
-    //method 3 long polling, bot.startPolling() at the end
-    // expressApp.get('/', (req, res) => {
-    //     res.send('Hello World!')
-    //   })
-    // expressApp.listen(PORT, () => {
-    //     console.log(`Listening on port ${PORT}`)
-    // })
-
-    //https://api.telegram.org/bot<token>/setWebhook?url=<endpoint>
-    
-//  } else {
-//     const Telegraf = require('telegraf');
-//     bot = new Telegraf('1962673670:AAHtYB7Y1bW9zkpAuOQCR3qRmGeZthxIJSc');
-//     //bot = new TelegramBot(token, { polling: true });
-//  }
-
-
 const QuickChart = require(`quickchart-js`);
 const whitelist = [1783394599, 845055796, 441474956, 1894125099]; // for users to send without being deleted
 const groupWhitelist = [-1001543285342, -414304361]; //1 - kardiainfo chat, 2 - bottest test
 let chartlink;
 const DELAY = 300000;
-const https = require("https");
+
 
 
 const _telegrafRateLimiter = require("@riddea/telegraf-rate-limiter");
-const { getHeapCodeStatistics } = require('v8');
 SHORT_TERM_LIMIT = 2; // 2 charts per 10 seconds
 SHORT_TERM_MUTE = 10;//seconds
 MID_TERM_LIMIT = 3; // 3 charts per minute
@@ -748,19 +720,7 @@ function abbreviate(num, fixed) {
 
 
 
-// if(process.env.NODE_ENV == 'production'){
-    expressApp.get('/', (req, res) => {
-        res.send(`Hello World!\nPort Number: ${PORT}`);
-    });
-    expressApp.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
-        
-    });
 
-    //module.exports = bot;
 
-// } else {
-//     bot.launch();
-// }
+module.exports = bot;
 
-//bot.startPolling();
