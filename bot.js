@@ -12,13 +12,13 @@ const apiurl = process.env.TOKEN_API;
 const apiLPurl = process.env.LP_API;
 
 const PORT = process.env.PORT || 3000;
-const URL = 'https://kardia-info-bot.herokuapp.com/';
+const HERO_URL = 'https://kardia-info-bot.herokuapp.com/';
 
 let bot;
 if (process.env.NODE_ENV === 'production') {
     bot = new Telegraf(process.env.BOT_TOKEN);
-    bot.telegram.setWebhook(`${URL}/bot${process.env.BOT_TOKEN}`);
-    expressApp.use(bot.webhookCallback(`/bot${process.env.BOT_TOKEN}`));
+    //bot.telegram.setWebhook(`${HERO_URL}/bot${process.env.BOT_TOKEN}`);
+    //expressApp.use(bot.webhookCallback(`/bot${process.env.BOT_TOKEN}`));
     //bot.setWebHook(process.env.HEROKU_URL + bot.token);
  } else {
     bot = new Telegraf('1962673670:AAHtYB7Y1bW9zkpAuOQCR3qRmGeZthxIJSc');
