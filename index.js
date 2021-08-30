@@ -122,9 +122,6 @@ async function mainMenu(ctx){
 
 
 fetch('https://kardia-info-backend.herokuapp.com/api/')
-    .then(res => {
-        return ctx.s
-    })
     .then((res) => { 
         return res.json();
     })
